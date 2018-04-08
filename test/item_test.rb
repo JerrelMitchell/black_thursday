@@ -6,9 +6,10 @@ class ItemTest < Minitest::Test
   attr_reader :item
   def setup
     @item = Item.new(
+      id: '5',
       name: 'Pencil',
       description: 'Can be used to write things',
-      unit_price: '1099',
+      unit_price: BigDecimal.new(10.99, 4),
       created_at: '2016-01-11 17:42:32 UTC',
       updated_at: '2016-01-11 17:42:32 UTC',
       merchant_id: '7'
@@ -20,19 +21,22 @@ class ItemTest < Minitest::Test
   end
 
   def test_it_has_attributes
+    assert_equal 5, item.id
+    assert_equal 7, item.merchant_id
+    assert_equal 10.99, item.unit_price
     assert_equal 'Pencil', item.name
     assert_equal 'Can be used to write things', item.description
-    assert_equal 10.99, item.unit_price
   end
 
   def test_it_can_show_times_when_created_and_updated
-    created = '2016-01-11 17:42:32 UTC'
-    updated = '2016-01-11 17:42:32 UTC'
-    assert_equal created, item.created_at
-    assert_equal updated, item.updated_at
+    creation_date = '2016-01-11 17:42:32 UTC'
+    updated_date = '2016-01-11 17:42:32 UTC'
+    assert_equal creation_date, item.created_at
+    assert_equal updated_date, item.updated_at
   end
 
   def test_its_price_in_dollar_amount_is_formatted_as_a_float
-    assert_instance_of Float, item.price_to_dollars
+    assert_instance_of Float, item.unit_price_to_dollars
+    assert_equal 10.99, item.unit_price_to_dollars
   end
 end
