@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'bigdecimal'
 # :nodoc:
 class Item
   attr_reader :id,
@@ -13,7 +13,7 @@ class Item
     @id          = item[:id].to_i
     @name        = item[:name]
     @description = item[:description]
-    @unit_price  = (BigDecimal(item[:unit_price], 4) / 100)
+    @unit_price  = BigDecimal.new(item[:unit_price])
     @created_at  = item[:created_at]
     @updated_at  = item[:updated_at]
     @merchant_id = item[:merchant_id].to_i

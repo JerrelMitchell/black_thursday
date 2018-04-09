@@ -10,8 +10,5 @@ class SalesEngineTest < Minitest::Test
     })
   end
 
-  def test_it_has_child_instances
-    assert_instance_of ItemRepository, sales_engine[:items]
-    assert_instance_of MerchantRepository, sales_engine.merchants
-  end
+
 end

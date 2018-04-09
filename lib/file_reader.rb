@@ -7,7 +7,11 @@ class FileReader
   end
 
   def load_file(file_name)
-    CSV.open('./data/small_items.csv'), headers: true, header_converters: :symbol
+    file = File.new(file_name, 'r')
+    file.each_line("\n") do |row|
+      columns = row.split(",")
+    end 
+    # CSV.open('./data/small_items.csv', headers: true, header_converters: :symbol)
   end
 
 end
