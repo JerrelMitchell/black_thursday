@@ -2,9 +2,9 @@
 
 # robocomment
 class MerchantRepository
-  attr_reader :attributes
+  attr_reader :merchants
 
-  def initialize(merchant)
-    @merchant = merchant
+  def initialize(merchants)
+    @merchants = merchants
   end
 end

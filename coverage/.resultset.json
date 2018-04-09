@@ -2,9 +2,72 @@
   "Unit Tests": {
     "coverage": {
       "/Users/jamisonordway/Desktop/turing/1module/projects/black_thursday/black_thursday/lib/sales_engine.rb": [
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        0,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        0,
+        0,
+        null,
+        null,
+        1,
+        0,
+        0,
+        null,
+        null
+      ],
+      "/Users/jamisonordway/Desktop/turing/1module/projects/black_thursday/black_thursday/lib/file_reader.rb": [
+        null,
+        null,
+        1,
+        1,
+        1,
+        0,
+        null,
+        null,
+        1,
+        0,
+        null,
+        null,
+        null
+      ],
+      "/Users/jamisonordway/Desktop/turing/1module/projects/black_thursday/black_thursday/lib/merchant_repository.rb": [
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        0,
+        null,
+        null
+      ],
+      "/Users/jamisonordway/Desktop/turing/1module/projects/black_thursday/black_thursday/lib/item_repository.rb": [
+        null,
+        null,
+        1,
+        1,
+        1,
+        0,
+        null,
+        null,
         null
       ]
     },
-    "timestamp": 1523301029
+    "timestamp": 1523306373
   }
 }
