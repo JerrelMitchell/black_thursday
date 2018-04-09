@@ -12,7 +12,7 @@ class ItemTest < Minitest::Test
       id: '5',
       name: 'Pencil',
       description: 'Can be used to write things',
-      unit_price: BigDecimal.new(10.99, 4),
+      unit_price: '1099',
       created_at: '2016-01-11 17:42:32 UTC',
       updated_at: '2016-01-11 17:42:32 UTC',
       merchant_id: '7'
