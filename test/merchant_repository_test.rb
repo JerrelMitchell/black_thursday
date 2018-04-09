@@ -19,7 +19,6 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_can_create_a_new_merchant_instance
-    skip
     attributes = ''
     merchant_repository.create(attributes)
     assert_equal [''], merchant_repository.all
