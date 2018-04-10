@@ -1,13 +1,12 @@
-# frozen_string_literal true
 require 'csv'
 require_relative 'item'
-require 'bigdecimal'
+
 # robocomment
 class ItemRepository
   attr_reader :items
-
-  def initialize(filepath)
+  def initialize(filepath, parent)
     @items = []
+    @parent = parent
     load_items(filepath)
   end
 

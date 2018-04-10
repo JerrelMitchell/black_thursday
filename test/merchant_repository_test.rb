@@ -1,22 +1,19 @@
-# frozen_string_literal: true
-
 require './test/test_helper'
 require_relative '../lib/merchant_repository'
 
 # :nodoc:
 class MerchantRepositoryTest < Minitest::Test
-
-  def test_it_has_all_merchants
-    mr = MerchantRepository.new('./data/small_merchants.csv')
-
-    assert_instance_of Array, mr.all
-    assert_equal 39, mr.all.count
-    assert mr.all.all? {|merchant| merchant.is_a?(Merchant)}
+  def test_it_exists
+    merchant_repo = MerchantRepository.new('./data/small_merchants.csv')
+    assert_instance_of MerchantRepository, merchant_repo
   end
 
-  def test_it_exists
-    mr = MerchantRepository.new('./data/small_merchants.csv')
-    assert_instance_of MerchantRepository, mr
+  def test_it_has_all_merchants_in_array_and_all_merchants_are_merchants
+    merchant_repo = MerchantRepository.new('./data/small_merchants.csv')
+
+    assert_instance_of Array, merchant_repo.all
+    assert_equal 39, merchant_repo.all.count
+    assert(merchant_repo.all.all? { |merchant| merchant.is_a?(Merchant) })
   end
 
   # def test_it_can_create_a_new_merchant_instance
