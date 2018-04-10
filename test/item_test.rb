@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
 require './test/test_helper'
-require 'bigdecimal'
 require_relative '../lib/item'
 
 # :nodoc:

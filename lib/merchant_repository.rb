@@ -1,12 +1,12 @@
-# frozen_string_literal true
 require 'csv'
 require_relative 'merchant'
+
 # robocomment
 class MerchantRepository
   attr_reader :merchants
-
-  def initialize(filepath)
+  def initialize(filepath, parent)
     @merchants = []
+    @parent = parent
     load_merchants(filepath)
   end
 
