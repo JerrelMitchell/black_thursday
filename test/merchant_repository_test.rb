@@ -35,4 +35,16 @@ class MerchantRepositoryTest < Minitest::Test
     assert_nil merchant_repo.find_by_name('bowls!bychr!s')
   end
 
+  def test_it_can_find_all_instances_of_a_name
+    assert_instance_of Array, merchant_repo.find_all_by_name('ess')
+    expected = ["GoldenRayPress", "Princessfrankknits", "WellnessNeelsen"]
+    assert_equal expected, merchant_repo.find_all_by_name('ess')
+    assert_equal expected, merchant_repo.find_all_by_name('ESS')
+    assert_equal [], merchant_repo.find_all_by_name('!!!')
+  end
+
+  def test_it_can_delete_merchant_by_id
+    assert_instance_of Merchant, merchant_repo.find_by_id(id)
+  end
+
 end

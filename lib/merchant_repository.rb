@@ -33,4 +33,13 @@ class MerchantRepository
     end
   end
 
+  def find_all_by_name(name)
+    matches = @merchants.find_all do |merchant|
+      merchant.name.downcase.include?(name.downcase)
+    end
+    matches.map do |match|
+      match.name
+    end
+  end
+
 end
