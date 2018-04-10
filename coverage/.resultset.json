@@ -1,0 +1,59 @@
+{
+  "Unit Tests": {
+    "coverage": {
+      "/Users/jamisonordway/Desktop/turing/1module/projects/black_thursday/black_thursday/lib/item_repository.rb": [
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        1,
+        2,
+        2,
+        null,
+        null,
+        1,
+        2,
+        null,
+        null,
+        1,
+        2,
+        188,
+        null,
+        null,
+        null
+      ],
+      "/Users/jamisonordway/Desktop/turing/1module/projects/black_thursday/black_thursday/lib/item.rb": [
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        188,
+        188,
+        188,
+        188,
+        188,
+        188,
+        188,
+        null,
+        null,
+        1,
+        0,
+        null,
+        null
+      ]
+    },
+    "timestamp": 1523314279
+  }
+}
