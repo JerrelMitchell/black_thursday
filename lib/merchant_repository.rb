@@ -42,4 +42,18 @@ class MerchantRepository
     end
   end
 
+  def delete(id)
+    merchant_instance = find_by_id(id)
+    @merchants.delete(merchant_instance)
+  end
+
+  def create(name)
+    highest_merchant = @merchants.max_by do |merchant|
+      merchant.id
+    end
+    new_merchant_id = (highest_merchant.id + 1)
+    new_merchant_attributes = {name: name, id: new_merchant_id}
+    @merchants << Merchant.new(new_merchant_attributes)
+  end
+
 end
