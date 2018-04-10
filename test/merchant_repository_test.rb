@@ -1,61 +1,38 @@
 require './test/test_helper'
 require_relative '../lib/merchant_repository'
+require_relative '../lib/sales_engine'
 
 # :nodoc:
 class MerchantRepositoryTest < Minitest::Test
+  attr_reader :merchant_repo
+  def setup
+    @engine_csvs = SalesEngine.from_csv({
+      items: './data/small_items.csv',
+      merchants: './data/small_merchants.csv'
+    })
+    @merchant_repo = @engine_csvs.merchants
+  end
+
   def test_it_exists
-    merchant_repo = MerchantRepository.new('./data/small_merchants.csv')
     assert_instance_of MerchantRepository, merchant_repo
   end
 
   def test_it_has_all_merchants_in_array_and_all_merchants_are_merchants
-    merchant_repo = MerchantRepository.new('./data/small_merchants.csv')
-
     assert_instance_of Array, merchant_repo.all
     assert_equal 39, merchant_repo.all.count
     assert(merchant_repo.all.all? { |merchant| merchant.is_a?(Merchant) })
   end
 
-  # def test_it_can_create_a_new_merchant_instance
-  #   attributes = ''
-  #   merchant_repository.create(attributes)
-  #   assert_equal [''], merchant_repository.all
-  # end
-  #
-  # def test_it_can_find_specified_merchant_by_id
-  #   skip
-  #   attributes = ''
-  #   merchant_repository.create(attributes)
-  #   assert_equal '', merchant_repository.find_by_id(id)
-  # end
-  #
-  # def test_it_can_find_specified_merchant_by_name
-  #   skip
-  #   attributes = ''
-  #   merchant_repository.create(attributes)
-  #   assert_equal '', merchant_repository.find_by_name(name)
-  # end
-  #
-  # def test_it_can_find_all_matching_merchants_that_contain_specified_string
-  #   skip
-  #   attributes = ''
-  #   merchant_repository.create(attributes)
-  #   assert_equal '', merchant_repository.find_all_by_name(name)
-  # end
-  #
-  # def test_it_can_update_an_established_merchant
-  #   skip
-  #   attributes = ''
-  #   merchant_repository.create(attributes)
-  #   merchant_repository.update(id, attributes)
-  #   assert_equal '', merchant_repository.find_by_id(id)
-  # end
-  #
-  # def test_it_can_delete_an_established_merchant_from_the_list_by_id
-  #   skip
-  #   attributes = ''
-  #   merchant_repository.create(attributes)
-  #   merchant_repository.delete(id)
-  #   assert_equal [], merchant_repository.all
-  # end
+  def test_it_can_find_specified_merchant_by_id
+    assert_instance_of Merchant, merchant_repo.find_by_id(12334135)
+    assert_equal 12334135, merchant_repo.find_by_id(12334135).id
+  end
+
+  def test_it_can_find_specified_merchant_by_name
+    assert_instance_of Merchant, merchant_repo.find_by_name('BowlsByChris')
+    assert_equal 'BowlsByChris', merchant_repo.find_by_name('bowlsbychris').name
+    assert_equal 'BowlsByChris', merchant_repo.find_by_name('BOWLSBYCHRIS').name
+    assert_nil merchant_repo.find_by_name('bowls!bychr!s')
+  end
+
 end

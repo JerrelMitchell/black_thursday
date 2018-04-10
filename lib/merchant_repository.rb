@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# frozen_string_literal: true
 
-=======
->>>>>>> 2e13b95e254c9878d624bba93b37cd1397d517c8
 require 'csv'
 require_relative 'merchant'
 
@@ -24,4 +20,17 @@ class MerchantRepository
       @merchants << Merchant.new(row)
     end
   end
+
+  def find_by_id(id)
+    @merchants.find do |merchant|
+    merchant.id == id
+   end
+  end
+
+  def find_by_name(name)
+    @merchants.find do |merchant|
+      merchant.name.downcase == name.downcase
+    end
+  end
+
 end
