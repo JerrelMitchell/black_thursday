@@ -1,4 +1,5 @@
 require 'csv'
+require 'time'
 require 'bigdecimal'
 require_relative 'item'
 
@@ -10,14 +11,14 @@ class ItemRepository
     load_items(filepath)
   end
 
-  def all
-    @items
-  end
-
   def load_items(filepath)
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-      @items << Item.new(row)
+      @items << Item.new(row, self)
     end
+  end
+
+  def all
+    @items
   end
 
   def find_by_id(id)
@@ -32,7 +33,7 @@ class ItemRepository
     end
   end
 
-  def find_all_by_description(description)
+  def find_all_with_description(description)
     @items.find_all do |item|
       item.description.downcase.include?(description.downcase)
     end
@@ -40,7 +41,7 @@ class ItemRepository
 
   def find_all_by_price(price)
     @items.find_all do |item|
-      item.unit_price_to_dollars.to_i.eql?(price.to_i)
+      item.unit_price.eql?(price)
     end
   end
 
@@ -61,25 +62,25 @@ class ItemRepository
     @items.delete(item_instance)
   end
 
-  def create(name, description, unit_price)
-    highest_item = @items.max_by do |item|
-      item.id
-    end
+  def create(attributes)
+    highest_item = @items.max_by(&:id)
     new_item_id = (highest_item.id + 1)
-    new_item_attributes = {
-      name: name,
-      id: new_item_id,
-      description: description,
-      unit_price: unit_price
-    }
-    @items << Item.new(new_item_attributes)
+    attributes[:id] = new_item_id
+    attributes[:created_at] = Time.now.to_s
+    attributes[:updated_at] = Time.now.to_s
+    @items << Item.new(attributes, self)
   end
 
-  def update(id, new_name, new_description, new_price)
+  def update(id, attributes)
     current = find_by_id(id)
-    current.name = new_name
-    current.description = new_description
-    current.unit_price = new_price
+    unchanging_attributes = %i[id created_at merchant_id]
+    attributes.each do
+      next if (attributes.keys & unchanging_attributes).any?
+      current.name        = attributes[:name]
+      current.description = attributes[:description]
+      current.unit_price  = attributes[:unit_price]
+      current.updated_at  = Time.now
+    end
   end
 
   def inspect

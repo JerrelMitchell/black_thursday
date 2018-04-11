@@ -1,7 +1,7 @@
 # :nodoc:
 class Merchant
-  attr_reader :parent
-  attr_accessor :id, :name
+  attr_reader :id, :parent
+  attr_accessor :name
   def initialize(merchant, parent)
     @id     = merchant[:id].to_i
     @name   = merchant[:name]

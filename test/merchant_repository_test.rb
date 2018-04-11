@@ -52,22 +52,21 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_can_create_new_merchant_instance_with_given_attributes
     assert_nil merchant_repo.find_by_id(12334265)
-    merchant_repo.create('AtomStore')
+    merchant_repo.create(name: 'AtomStore')
     assert_equal 12334265, merchant_repo.find_by_id(12334265).id
     assert_equal 'AtomStore', merchant_repo.find_by_name('AtomStore').name
   end
 
   def test_can_search_by_id_and_update_name_attribute
     assert_equal 'Shopin1901', merchant_repo.find_by_name('Shopin1901').name
-    merchant_repo.update(12334105, 'Shoppin1990')
+    merchant_repo.update(12334105, name: 'Shoppin1990')
+    assert_nil merchant_repo.find_by_name('Shopin1901')
     assert_equal 12334105, merchant_repo.find_by_name('Shoppin1990').id
     assert_equal 'Shoppin1990', merchant_repo.find_by_name('Shoppin1990').name
   end
 
-  def test_update_on_uinknown_merchant_does_nothing
+  def test_update_on_unknown_merchant_does_nothing
     assert_nil merchant_repo.find_by_name('BullshitShop')
-    merchant_repo.update(000000, 'BullshitShop')
-    assert_nil merchant_repo.find_by_name('Shoppin1990')
+    assert_nil merchant_repo.update(00000, name: 'BullshitShop')
   end
-
 end

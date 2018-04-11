@@ -10,10 +10,6 @@ class MerchantRepository
     load_merchants(filepath)
   end
 
-  def all
-    @merchants
-  end
-
   def load_merchants(filepath)
     CSV.foreach(filepath,
                 headers: true,
@@ -22,8 +18,13 @@ class MerchantRepository
     end
   end
 
+  def all
+    @merchants
+  end
+
   def find_by_id(id)
     @merchants.find do |merchant|
+      return nil if merchant.id.nil?
       merchant.id == id
     end
   end
@@ -46,16 +47,16 @@ class MerchantRepository
     @merchants.delete(merchant_instance)
   end
 
-  def create(name)
-    new_merchant_id = @merchants.map(&:id).max + 1
-    new_merchant_attributes = { name: name, id: new_merchant_id }
-    @merchants << Merchant.new(new_merchant_attributes, self)
+  def create(attributes)
+    new_id = (@merchants.map(&:id).max + 1)
+    attributes[:id] = new_id
+    @merchants << Merchant.new(attributes, self)
   end
 
-  def update(id, new_name)
+  def update(id, attributes)
     current = find_by_id(id)
     return nil if current.nil?
-    current.name = new_name
+    current.name = attributes[:name]
   end
 
   def inspect

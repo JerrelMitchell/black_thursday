@@ -5,10 +5,7 @@ require_relative '../lib/merchant'
 class MerchantTest < Minitest::Test
   attr_reader :merchant
   def setup
-    @merchant = Merchant.new(
-      id:   '5',
-      name: 'Turing School'
-    )
+    @merchant = Merchant.new({ id: '5', name: 'Turing School' }, self)
   end
 
   def test_it_exists
