@@ -37,9 +37,10 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_it_can_find_all_instances_of_a_name
     assert_instance_of Array, merchant_repo.find_all_by_name('ess')
-    expected = ["GoldenRayPress", "Princessfrankknits", "WellnessNeelsen"]
-    assert_equal expected, merchant_repo.find_all_by_name('ess')
-    assert_equal expected, merchant_repo.find_all_by_name('ESS')
+    expected1 = "GoldenRayPress"
+    expected2 = "WellnessNeelsen"
+    assert_equal expected1, merchant_repo.find_all_by_name('ess').first.name
+    assert_equal expected2, merchant_repo.find_all_by_name('ESS').last.name
     assert_equal [], merchant_repo.find_all_by_name('!!!')
   end
 
@@ -59,7 +60,14 @@ class MerchantRepositoryTest < Minitest::Test
   def test_can_search_by_id_and_update_name_attribute
     assert_equal 'Shopin1901', merchant_repo.find_by_name('Shopin1901').name
     merchant_repo.update(12334105, 'Shoppin1990')
+    assert_equal 12334105, merchant_repo.find_by_name('Shoppin1990').id
     assert_equal 'Shoppin1990', merchant_repo.find_by_name('Shoppin1990').name
+  end
+
+  def test_update_on_uinknown_merchant_does_nothing
+    assert_nil merchant_repo.find_by_name('BullshitShop')
+    merchant_repo.update(000000, 'BullshitShop')
+    assert_nil merchant_repo.find_by_name('Shoppin1990')
   end
 
 end

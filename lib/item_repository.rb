@@ -81,4 +81,8 @@ class ItemRepository
     current.description = new_description
     current.unit_price = new_price
   end
+
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
+  end
 end

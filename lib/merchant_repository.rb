@@ -15,8 +15,10 @@ class MerchantRepository
   end
 
   def load_merchants(filepath)
-    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-      @merchants << Merchant.new(row)
+    CSV.foreach(filepath,
+                headers: true,
+                header_converters: :symbol) do |row|
+      @merchants << Merchant.new(row, self)
     end
   end
 
@@ -28,16 +30,14 @@ class MerchantRepository
 
   def find_by_name(name)
     @merchants.find do |merchant|
+      return nil if merchant.name.nil?
       merchant.name.downcase == name.downcase
     end
   end
 
   def find_all_by_name(name)
-    matches = @merchants.find_all do |merchant|
+    @merchants.find_all do |merchant|
       merchant.name.downcase.include?(name.downcase)
-    end
-    matches.map do |match|
-      match.name
     end
   end
 
@@ -47,16 +47,18 @@ class MerchantRepository
   end
 
   def create(name)
-    highest_merchant = @merchants.max_by do |merchant|
-      merchant.id
-    end
-    new_merchant_id = (highest_merchant.id + 1)
-    new_merchant_attributes = {name: name, id: new_merchant_id}
-    @merchants << Merchant.new(new_merchant_attributes)
+    new_merchant_id = @merchants.map(&:id).max + 1
+    new_merchant_attributes = { name: name, id: new_merchant_id }
+    @merchants << Merchant.new(new_merchant_attributes, self)
   end
 
   def update(id, new_name)
     current = find_by_id(id)
+    return nil if current.nil?
     current.name = new_name
+  end
+
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
   end
 end
