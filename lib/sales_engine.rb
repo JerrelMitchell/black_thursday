@@ -13,4 +13,8 @@ class SalesEngine
   def self.from_csv(files)
     new(files)
   end
+
+  def analyst
+    SalesAnalyst.new(self)
+  end
 end
