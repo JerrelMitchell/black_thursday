@@ -2,7 +2,6 @@ require 'csv'
 require 'bigdecimal'
 require_relative 'item'
 
-# robocomment
 class ItemRepository
   attr_reader :items
   def initialize(filepath, parent)
