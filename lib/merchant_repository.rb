@@ -1,4 +1,3 @@
-
 require 'csv'
 require_relative 'merchant'
 
@@ -23,8 +22,8 @@ class MerchantRepository
 
   def find_by_id(id)
     @merchants.find do |merchant|
-    merchant.id == id
-   end
+      merchant.id == id
+    end
   end
 
   def find_by_name(name)
@@ -58,7 +57,6 @@ class MerchantRepository
 
   def update(id, new_name)
     current = find_by_id(id)
-    current.name = new_name 
+    current.name = new_name
   end
-
 end
