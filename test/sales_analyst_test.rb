@@ -24,31 +24,31 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 3.26, @sales_analyst.average_items_per_merchant_standard_deviation
   end
 
-  def test_average_item_price_for_merchant_returns_for_given_merchant
-    skip
-    assert_equal 0, @sales_analyst.average_item_price_for_merchant(@merchant.id)
-    # according to spec harness, this method should be called
-    # average_item_price_for_merchant and should return a BigDecimal
-  end
-
-  def test_it_returns_average_item_price_for_all_merchants
-    skip
-    assert_equal 0, @sales_analyst.average_average_price_per_merchant
-    # according to spec harness, this method should be called
-    # average_average_price_per_merchant and should return a BigDecimal
-  end
-
-  def test_it_can_find_merchants_with_high_item_count
-    skip
-    assert_equal ['merchant 1', 'merchant 2'], @sales_analyst.merchants_with_high_item_count
-    # more than one standard deviation above the average number of products offered
-  end
-
-  def test_it_returns_golden_items
-    skip
-    assert_equal ['golden item 1', 'golden item 2'], @sales_analyst.golden_items
-    # golden items are two standard deviations above average price
-    # this method should return an array
-  end
-
+#   def test_average_item_price_for_merchant_returns_for_given_merchant
+#     skip
+#     assert_equal 0, @sales_analyst.average_item_price_for_merchant(@merchant.id)
+#     # according to spec harness, this method should be called
+#     # average_item_price_for_merchant and should return a BigDecimal
+#   end
+#
+#   def test_it_returns_average_item_price_for_all_merchants
+#     skip
+#     assert_equal 0, @sales_analyst.average_average_price_per_merchant
+#     # according to spec harness, this method should be called
+#     # average_average_price_per_merchant and should return a BigDecimal
+#   end
+#
+#   def test_it_can_find_merchants_with_high_item_count
+#     skip
+#     assert_equal ['merchant 1', 'merchant 2'], @sales_analyst.merchants_with_high_item_count
+#     # more than one standard deviation above the average number of products offered
+#   end
+#
+#   def test_it_returns_golden_items
+#     skip
+#     assert_equal ['golden item 1', 'golden item 2'], @sales_analyst.golden_items
+#     # golden items are two standard deviations above average price
+#     # this method should return an array
+#   end
+#
 end
