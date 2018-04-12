@@ -7,7 +7,7 @@ require 'pry'
 # :nodoc:
 class ItemRepository
   attr_reader :items
-  def initialize(filepath, parent) # rename parent 'engine'?
+  def initialize(filepath, parent)
     @items = []
     @parent = parent
     load_items(filepath)
