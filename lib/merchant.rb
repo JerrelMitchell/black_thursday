@@ -11,5 +11,4 @@ class Merchant
   def items
     parent.pass_id_to_sales_engine(id)
   end
-
 end

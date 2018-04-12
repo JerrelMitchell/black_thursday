@@ -31,25 +31,18 @@ class SalesAnalystTest < Minitest::Test
     result = sales_analyst.merchants_with_high_item_count
     assert_equal 2, result.size
     assert_equal Merchant, result.first.class
-    # more than one standard deviation above the
-    # average number of products offered
   end
 
   def test_it_calculates_average_item_price_for_merchant_specified_by_id
     result = sales_analyst.average_item_price_for_merchant(12334105)
     assert_equal BigDecimal, result.class
     assert_equal 29.99, result.to_f
-    # according to spec harness, this method should be called
-    # average_item_price_for_merchant and should return a BigDecimal
   end
 
   def test_it_calculates_average_item_price_for_all_merchants
-    skip
     result = sales_analyst.average_average_price_per_merchant
     assert_equal BigDecimal, result.class
-    assert_equal 0, result.to_f
-    # according to spec harness, this method should be called
-    # average_average_price_per_merchant and should return a BigDecimal
+    assert_equal 26.87, result.to_f
   end
 
   def test_it_returns_collection_golden_items
