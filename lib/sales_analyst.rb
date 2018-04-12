@@ -1,5 +1,3 @@
-require_relative 'sales_engine'
-
 class SalesAnalyst
 
   def initialize(sales_engine)
@@ -19,26 +17,21 @@ class SalesAnalyst
   end
 
   def standard_deviation(data, average)
-   result = data.map do |item|
-     (item - average)**2
-   end.reduce(:+) / (data.length - 1)
-   Math.sqrt(result)
- end
+    result = data.map do |item|
+      (item - average)**2
+    end.reduce(:+) / (data.length - 1)
+    Math.sqrt(result)
+  end
 
- def average_items_per_merchant
-   average(items.length, merchants.length).to_f
- end
+  def numbers_of_items_per_merchant
+    ids_array = merchants.map(&:id)
+    ids_array.map do |id|
+      @sales_engine.items.find_all_by_merchant_id(id).count
+    end
+  end
 
- def numbers_of_items_per_merchant
-   ids_array = merchants.map(&:id)
-   ids_array.map do |id|
-     @sales_engine.items.find_all_by_merchant_id(id).count
-   end
- end
-
- def average_items_per_merchant_standard_deviation
-   standard_deviation(numbers_of_items_per_merchant,
-   average(items.count, merchants.count))
- end
-
+  def average_items_per_merchant_standard_deviation
+    standard_deviation(numbers_of_items_per_merchant)
+    average(items.count, merchants.count)
+  end
 end

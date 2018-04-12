@@ -5,15 +5,16 @@ require_relative '../lib/item'
 class ItemTest < Minitest::Test
   attr_reader :item
   def setup
-    @item = Item.new(
-      id: '5',
-      name: 'Pencil',
-      description: 'Can be used to write things',
-      unit_price: '1099',
-      created_at: '2016-01-11 17:42:32 UTC',
-      updated_at: '2016-01-11 17:42:32 UTC',
-      merchant_id: '7'
-    )
+    @item = Item.new({
+                       id: '5',
+                       name: 'Pencil',
+                       description: 'Can be used to write things',
+                       unit_price: '1099',
+                       created_at: '2016-01-11 17:42:32 UTC',
+                       updated_at: '2016-01-11 17:42:32 UTC',
+                       merchant_id: '7'
+                     },
+                     'parent')
   end
 
   def test_it_exists
@@ -31,8 +32,8 @@ class ItemTest < Minitest::Test
   def test_it_can_show_times_when_created_and_updated
     creation_date = '2016-01-11 17:42:32 UTC'
     updated_date = '2016-01-11 17:42:32 UTC'
-    assert_equal creation_date, item.created_at
-    assert_equal updated_date, item.updated_at
+    assert_equal creation_date, item.created_at.to_s
+    assert_equal updated_date, item.updated_at.to_s
   end
 
   def test_its_price_in_dollar_amount_is_formatted_as_a_float

@@ -2,6 +2,7 @@ require 'csv'
 require 'time'
 require 'bigdecimal'
 require_relative 'item'
+require 'pry'
 
 class ItemRepository
   attr_reader :items
@@ -74,12 +75,16 @@ class ItemRepository
   def update(id, attributes)
     current = find_by_id(id)
     unchanging_attributes = %i[id created_at merchant_id]
+    assign_attributes(current, attributes, unchanging_attributes)
+  end
+
+  def assign_attributes(current_item, attributes, unchanging_attributes)
     attributes.each do
       next if (attributes.keys & unchanging_attributes).any?
-      current.name        = attributes[:name]
-      current.description = attributes[:description]
-      current.unit_price  = attributes[:unit_price]
-      current.updated_at  = Time.now
+      # current_item.name      = attributes[:name]
+      current_item.description = attributes[:description]
+      current_item.unit_price  = attributes[:unit_price]
+      current_item.updated_at  = Time.now
     end
   end
 
