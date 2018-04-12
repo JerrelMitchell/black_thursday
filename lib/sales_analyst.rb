@@ -1,6 +1,7 @@
 # :nodoc:
 require_relative '../lib/item'
 require_relative '../lib/item_repository'
+require_relative '../lib/sales_engine'
 
 class SalesAnalyst
 
@@ -33,17 +34,5 @@ class SalesAnalyst
     Math.sqrt(result)
   end
 
-  def average_items_per_merchant_standard_deviation
-    standard_deviation(amount_of_items_per_merchant, average(analyzed_items.count, analyzed_merchants.count)).round(2)
-  end
-
-  def merchants_with_high_item_count
-
-  end
-
-  def average_item_price_for_merchant(merchant_id)
-    binding.pry
-    average(@merchant.items.unit_price, @item_repository.all.unit_price)
-  end
 
 end
