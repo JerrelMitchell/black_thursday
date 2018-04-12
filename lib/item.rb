@@ -1,5 +1,6 @@
 require 'bigdecimal'
 require 'time'
+
 # :nodoc:
 class Item
   attr_accessor :name, :updated_at, :unit_price, :description, :parent
