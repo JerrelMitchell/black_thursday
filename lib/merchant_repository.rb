@@ -3,7 +3,7 @@ require_relative 'merchant'
 
 # robocomment
 class MerchantRepository
-  attr_reader :merchants
+  attr_reader :merchants, :parent
   def initialize(filepath, parent)
     @merchants = []
     @parent = parent
@@ -61,5 +61,9 @@ class MerchantRepository
 
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
+  end
+
+  def pass_id_to_sales_engine(id)
+    parent.pass_id_to_item_repo(id)
   end
 end
