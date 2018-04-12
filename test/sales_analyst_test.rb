@@ -21,19 +21,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 2.41, result
   end
 
-  def test_it_can_find_average_items_for_each_merchant
-    assert_equal 2.41, @sales_analyst.average_items_per_merchant
-  end
-
-  def test_it_can_find_standard_deviation_for_average_items_per_merchant
-    assert_equal 3.26, @sales_analyst.average_items_per_merchant_standard_deviation
-  end
-
-
-  def test_it_can_find_standard_deviation_for_average_items_per_merchant
-    assert_equal 0, @sales_analyst.average_items_per_merchant_standard_deviation
-  end
-
   def test_it_calculates_standard_deviation_for_average_items_per_merchant
     skip
     result = sales_analyst.average_items_per_merchant_standard_deviation
