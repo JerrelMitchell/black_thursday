@@ -7,4 +7,8 @@ class Merchant
     @name   = merchant[:name]
     @parent = parent
   end
+
+  def items
+    parent.pass_id_to_sales_engine(id)
+  end
 end
