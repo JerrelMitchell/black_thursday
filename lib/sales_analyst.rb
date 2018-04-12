@@ -2,25 +2,6 @@ require_relative 'sales_engine'
 
 class SalesAnalyst
 
-<<<<<<< HEAD
-  def initialize
-
-  end
-
-  def average_items_per_merchant
-    @merchants.reduce(0) do |merchant|
-      merchant.items.length #can we use reduce here??
-    end
-    # find average items per merchant
-  end
-
-  def merchants_with_high_item_count
-    @merchants.sort_by do |merchant|
-      merchant.items.length
-    end
-  end
-
-=======
   def initialize(sales_engine)
     @sales_engine = sales_engine
   end
@@ -39,7 +20,6 @@ class SalesAnalyst
 
   def standard_deviation(data, average)
    result = data.map do |item|
-     binding.pry
      (item - average)**2
    end.reduce(:+) / (data.length - 1)
    Math.sqrt(result)
@@ -57,9 +37,8 @@ class SalesAnalyst
  end
 
  def average_items_per_merchant_standard_deviation
-   standard_deviation(numbers_of_items_per_merchant)
-   average(items.count, merchants.count)
+   standard_deviation(numbers_of_items_per_merchant,
+   average(items.count, merchants.count))
  end
->>>>>>> wip
 
 end

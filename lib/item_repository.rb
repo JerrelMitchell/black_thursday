@@ -5,7 +5,7 @@ require_relative 'item'
 
 class ItemRepository
   attr_reader :items
-  def initialize(filepath, parent)
+  def initialize(filepath, parent) # rename parent 'engine'?
     @items = []
     @parent = parent
     load_items(filepath)
