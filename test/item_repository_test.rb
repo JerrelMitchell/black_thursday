@@ -6,10 +6,10 @@ require_relative '../lib/sales_engine'
 class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repo
   def setup
-    @engine_csvs = SalesEngine.from_csv({
+    @engine_csvs = SalesEngine.from_csv(
       items: './data/small_items.csv',
       merchants: './data/small_merchants.csv'
-    })
+    )
     @item_repo = @engine_csvs.items
   end
 
@@ -123,23 +123,21 @@ class ItemRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_instances_of_an_item_included_in_a_description
-    expected1 = %(Handgerfertigete Topflappen in Form einer Eule. Die Topflappen wurden aus Wolle gehäkelt. Als Augen wurden Knöpfe verwendet.
-
-Der Verkauf erfolgt paarweise.
-
-Handmade in Germany
-
-Masse: Länge 22,5cm; Breite (breiteste Stelle) 17 cm)
-    expected2 = %(&quot;Harris&quot; - Cinnamon Buns Scent.
-Hand Wicked and Hand Poured, Small Batch Candles.
-Natural Soy Wax.
-Natural Wick.
-Reusable Tin Container.
-Available in two sizes: 8 oz or 4 oz.
-8 oz. Burn Time: 30-32 hours
-4 oz. Burn Time: 15 hours
-
-Due to the handmade nature of our products, there may be a slight variation in the coloring or burn time of your candle. We strive to make all of our candles with highest quality materials and utmost care.)
+    expected1 =
+      'Handgerfertigete Topflappen in Form einer Eule. '\
+'Die Topflappen wurden aus Wolle gehäkelt. '\
+"Als Augen wurden Knöpfe verwendet.\n\n"\
+"Der Verkauf erfolgt paarweise.\n\nHandmade in Germany\n
+Masse: Länge 22,5cm; Breite (breiteste Stelle) 17 cm"
+    expected2 =
+      "&quot;Harris&quot; - Cinnamon Buns Scent.\n"\
+"Hand Wicked and Hand Poured, Small Batch Candles.\n"\
+"Natural Soy Wax.\nNatural Wick.\nReusable Tin Container.\n"\
+"Available in two sizes: 8 oz or 4 oz.\n8 oz. Burn Time: 30-32 hours\n"\
+"4 oz. Burn Time: 15 hours\n\n"\
+'Due to the handmade nature of our products, there may be a slight variation '\
+'in the coloring or burn time of your candle. We strive to make all of our '\
+'candles with highest quality materials and utmost care.'
     result1 = item_repo.find_all_with_description('handmade')
     assert_equal 16,        result1.size
     assert_equal expected1, result1.first.description

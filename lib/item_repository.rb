@@ -4,6 +4,7 @@ require 'bigdecimal'
 require_relative 'item'
 require 'pry'
 
+# :nodoc:
 class ItemRepository
   attr_reader :items
   def initialize(filepath, parent) # rename parent 'engine'?
