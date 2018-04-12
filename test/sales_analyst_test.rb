@@ -46,11 +46,10 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_returns_collection_golden_items
-    skip
     result = sales_analyst.golden_items
     assert_equal Array, result.class
     assert_equal Item, result.first.class
-    assert_equal 5, result.size
+    assert_equal 2, result.size
     # golden items are two standard deviations above average price
     # this method should return an array
   end
