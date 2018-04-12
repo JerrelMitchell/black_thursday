@@ -22,10 +22,9 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_calculates_standard_deviation_for_average_items_per_merchant
-    skip
     result = sales_analyst.average_items_per_merchant_standard_deviation
     assert_equal Float, result.class
-    assert_equal 3.26, result
+    assert_equal 2.90, result
   end
 
   def test_it_returns_collection_of_merchants_with_high_item_counts
@@ -38,8 +37,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_calculates_average_item_price_for_merchant_specified_by_id
-    skip
-    result = sales_analyst.average_item_price_for_merchant('merchant id')
+    result = sales_analyst.average_item_price_for_merchant(12334105)
     assert_equal BigDecimal, result.class
     assert_equal 0, result
     # according to spec harness, this method should be called
