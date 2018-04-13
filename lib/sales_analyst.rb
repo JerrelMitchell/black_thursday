@@ -1,4 +1,8 @@
 # :nodoc:
+require_relative '../lib/item'
+require_relative '../lib/item_repository'
+require_relative '../lib/sales_engine'
+
 class SalesAnalyst
   attr_reader :sales_engine
   def initialize(sales_engine)

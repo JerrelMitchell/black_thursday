@@ -1,4 +1,4 @@
-require './test/test_helper'
+require_relative '../test/test_helper'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 
@@ -49,6 +49,6 @@ class SalesAnalystTest < Minitest::Test
     result = sales_analyst.golden_items
     assert_equal Array, result.class
     assert_equal Item, result.first.class
-    assert_equal 5, result.size
+    assert_equal 2, result.size
   end
 end
