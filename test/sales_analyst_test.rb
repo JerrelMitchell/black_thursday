@@ -50,7 +50,5 @@ class SalesAnalystTest < Minitest::Test
     assert_equal Array, result.class
     assert_equal Item, result.first.class
     assert_equal 2, result.size
-    # golden items are two standard deviations above average price
-    # this method should return an array
   end
 end
