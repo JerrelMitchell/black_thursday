@@ -17,12 +17,12 @@ class SalesAnalyst
     sales_engine.items.all
   end
 
-  def find_items_with_merchant_id(id)
-    sales_engine.merchants.find_by_id(id).items
-  end
-
   def all_item_prices
     items.map(&:unit_price)
+  end
+
+  def find_items_with_merchant_id(id)
+    sales_engine.merchants.find_by_id(id).items
   end
 
   def average(numerator, denominator)
@@ -73,9 +73,12 @@ class SalesAnalyst
   end
 
   def golden_items
+    average = average_average_price_per_merchant
+    standard_deviation = average_items_price_standard_deviation
+    difference = average + (standard_deviation * 2)
     items.collect do |item|
-      difference = (item.unit_price - average_average_price_per_merchant).to_f
-      item if difference > (average_items_price_standard_deviation * 2)
+      item if item.unit_price > difference
     end.compact
   end
+
 end

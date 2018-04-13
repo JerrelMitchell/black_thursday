@@ -1,4 +1,4 @@
-require_relative '../test/test_helper'
+require './test/test_helper'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 
@@ -50,5 +50,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal Array, result.class
     assert_equal Item, result.first.class
     assert_equal 2, result.size
+    # golden items are two standard deviations above average price
+    # this method should return an array
   end
 end
