@@ -1,8 +1,4 @@
 # :nodoc:
-require_relative '../lib/item'
-require_relative '../lib/item_repository'
-require_relative '../lib/sales_engine'
-
 class SalesAnalyst
   attr_reader :sales_engine
   def initialize(sales_engine)
@@ -72,13 +68,12 @@ class SalesAnalyst
     average(result, merchants.length)
   end
 
-  def golden_items
-    average = average_average_price_per_merchant
-    standard_deviation = average_items_price_standard_deviation
-    difference = average + (standard_deviation * 2)
-    items.collect do |item|
-      item if item.unit_price > difference
-    end.compact
-  end
-
+  # def golden_items
+  #   average       = average_average_price_per_merchant
+  #   std_dev_price = average_items_price_standard_deviation
+  #   items.collect do |item|
+  #     difference = (item.unit_price - average).to_f
+  #     item if difference > std_dev_price * 2
+  #   end.compact
+  # end
 end
