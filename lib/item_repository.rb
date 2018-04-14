@@ -15,27 +15,27 @@ class ItemRepository
   end
 
   def all
-    find_all_attributes(@items)
+    find_all_instances(@items)
   end
 
   def find_by_id(id)
-    find_by_attribute_id(@items, id)
+    find_by_instance_id(@items, id)
   end
 
   def find_by_name(name)
-    find_by_attribute_name(@items, name)
+    find_by_instance_name(@items, name)
   end
 
   def find_all_with_description(description)
-    find_all_with_attribute_description(@items, description)
+    find_all_with_instance_description(@items, description)
   end
 
   def find_all_by_price(price)
-    find_all_by_attribute_price(@items, price)
+    find_all_by_instance_price(@items, price)
   end
 
   def find_all_by_price_in_range(price_range)
-    find_all_attributes_in_price_range(@items, price_range)
+    find_all_instances_in_price_range(@items, price_range)
   end
 
   def find_all_by_merchant_id(merchant_id)
@@ -45,7 +45,7 @@ class ItemRepository
   end
 
   def delete(id)
-    delete_attribute(@items, id)
+    delete_instance(@items, id)
   end
 
   def create(attributes)

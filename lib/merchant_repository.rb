@@ -14,19 +14,19 @@ class MerchantRepository
   end
 
   def all
-    find_all_attributes(@merchants)
+    find_all_instances(@merchants)
   end
 
   def find_by_id(id)
-    find_by_attribute_id(@merchants, id)
+    find_by_instance_id(@merchants, id)
   end
 
   def find_by_name(name)
-    find_by_attribute_name(@merchants, name)
+    find_by_instance_name(@merchants, name)
   end
 
   def delete(id)
-    delete_attribute(@merchants, id)
+    delete_instance(@merchants, id)
   end
 
   def find_all_by_name(name)
