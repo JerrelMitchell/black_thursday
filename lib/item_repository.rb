@@ -49,14 +49,7 @@ class ItemRepository
   end
 
   def create(attributes)
-    highest_item_id_instance = @items.max_by do |item|
-      item.attributes[:id]
-    end
-    new_item_id = (highest_item_id_instance.attributes[:id] + 1)
-    attributes[:id]         = new_item_id
-    attributes[:created_at] = Time.now.to_s
-    attributes[:updated_at] = Time.now.to_s
-    @items << Item.new(attributes, self)
+    create_new_instance_with_dates(@items, attributes, Item)
   end
 
   def update(id, attributes)
