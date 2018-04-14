@@ -36,9 +36,7 @@ class MerchantRepository
   end
 
   def create(attributes)
-    new_id = (@merchants.map(&:id).max + 1)
-    attributes[:id] = new_id
-    @merchants << Merchant.new(attributes, self)
+    create_new_instance_with_dates(@merchants, attributes, Merchant)
   end
 
   def update(id, attributes)

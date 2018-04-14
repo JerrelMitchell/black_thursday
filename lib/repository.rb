@@ -1,6 +1,5 @@
 # :nodoc:
 module Repository
-
   def find_all_instances(instances)
     instances
   end
@@ -38,5 +37,15 @@ module Repository
   def delete_instance(instances, id)
     instance = find_by_instance_id(instances, id)
     instances.delete(instance)
+  end
+
+  def create_new_instance_with_dates(instances, attributes, klass)
+    new_id = (instances.map(&:id).max + 1)
+    attributes[:id] = new_id
+    if attributes.keys.include?(:description || :unit_price)
+      attributes[:created_at] = Time.now.to_s
+      attributes[:updated_at] = Time.now.to_s
+    end
+    instances << klass.new(attributes, self)
   end
 end
