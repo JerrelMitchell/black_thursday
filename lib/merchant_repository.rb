@@ -32,7 +32,7 @@ class MerchantRepository
   end
 
   def find_all_by_name(name)
-    find_all_by_attribute_name(@merchants, name)
+    find_all_by_instance_name(@merchants, name)
   end
 
   def create(attributes)
