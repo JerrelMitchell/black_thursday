@@ -51,7 +51,7 @@ class MerchantRepository
     "#<#{self.class} #{@merchants.size} rows>"
   end
 
-  def pass_id_to_sales_engine(id)
-    parent.pass_id_to_item_repo(id)
+  def collect_id_for_items(id)
+    parent.collect_items_by_merchant_id(id)
   end
 end

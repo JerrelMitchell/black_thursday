@@ -143,4 +143,8 @@ Masse: Länge 22,5cm; Breite (breiteste Stelle) 17 cm"
     assert_equal expected1, result1.first.description
     assert_equal expected2, result1.last.description
   end
+
+  def test_it_can_inspect_how_many_rows_of_instances_are_within_itself
+    assert_equal '#<ItemRepository 94 rows>', item_repo.inspect
+  end
 end

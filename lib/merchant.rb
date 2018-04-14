@@ -16,6 +16,6 @@ class Merchant
   end
 
   def items
-    parent.pass_id_to_sales_engine(id)
+    parent.collect_id_for_items(id)
   end
 end

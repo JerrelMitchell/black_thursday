@@ -38,6 +38,12 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 29.99, result.to_f
   end
 
+  def test_it_calculates_standard_deviation_for_average_item_price
+    result = sales_analyst.average_items_price_standard_deviation
+    assert_equal Float, result.class
+    assert_equal 374.65, result.to_f.round(2)
+  end
+
   def test_it_calculates_average_item_price_for_all_merchants
     result = sales_analyst.average_average_price_per_merchant
     assert_equal BigDecimal, result.class
