@@ -16,6 +16,12 @@ module Repository
     end
   end
 
+  def find_all_by_instance_name(instances, name)
+    instances.find_all do |instance|
+      instance.attributes[:name].downcase.include?(name.downcase)
+    end
+  end
+
   def find_all_with_instance_description(instances, description)
     instances.find_all do |instance|
       instance.attributes[:description].downcase.include?(description.downcase)
