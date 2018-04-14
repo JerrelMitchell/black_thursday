@@ -20,4 +20,10 @@ class SalesEngineTest < Minitest::Test
     assert_equal '510+ RealPush Icon Set', engine.items.all.first.name
     assert_equal 'Shopin1901', engine.merchants.all.first.name
   end
+
+  def test_it_can_collect_merchant_instance_determined_by_matching_merchant_id
+    result = engine.collect_merchant_by_id(12334185)
+    assert_equal 12334185, result.id
+    assert_equal Merchant, result.class
+  end
 end

@@ -102,4 +102,8 @@ class MerchantRepositoryTest < Minitest::Test
     assert_nil merchant_repo.find_by_name('Nil Example Shop')
     assert_nil merchant_repo.update(00000, name: 'Nil Example Shop')
   end
+
+  def test_it_can_inspect_how_many_rows_of_instances_are_within_itself
+    assert_equal '#<MerchantRepository 39 rows>', merchant_repo.inspect
+  end
 end
