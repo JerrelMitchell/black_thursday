@@ -6,9 +6,9 @@ require_relative '../lib/sales_engine'
 class SalesAnalystTest < Minitest::Test
   attr_reader :sales_analyst
   def setup
-    @engine = SalesEngine.from_csv(items: './data/small_items.csv',
+    engine = SalesEngine.from_csv(items: './data/small_items.csv',
                                    merchants: './data/small_merchants.csv')
-    @sales_analyst = @engine.analyst
+    @sales_analyst = engine.analyst
   end
 
   def test_it_exists
@@ -46,12 +46,9 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_returns_collection_golden_items
-    skip
     result = sales_analyst.golden_items
     assert_equal Array, result.class
     assert_equal Item, result.first.class
     assert_equal 5, result.size
-    # golden items are two standard deviations above average price
-    # this method should return an array
   end
 end

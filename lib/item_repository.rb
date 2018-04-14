@@ -2,7 +2,6 @@ require 'csv'
 require 'time'
 require 'bigdecimal'
 require_relative 'item'
-require 'pry'
 
 # :nodoc:
 class ItemRepository

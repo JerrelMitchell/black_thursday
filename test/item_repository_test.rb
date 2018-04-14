@@ -6,11 +6,11 @@ require_relative '../lib/sales_engine'
 class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repo
   def setup
-    @engine_csvs = SalesEngine.from_csv(
+    engine = SalesEngine.from_csv(
       items: './data/small_items.csv',
       merchants: './data/small_merchants.csv'
     )
-    @item_repo = @engine_csvs.items
+    @item_repo = engine.items
   end
 
   def test_it_exists

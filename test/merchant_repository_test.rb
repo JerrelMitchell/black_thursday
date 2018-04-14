@@ -5,11 +5,11 @@ require_relative '../lib/sales_engine'
 class MerchantRepositoryTest < Minitest::Test
   attr_reader :merchant_repo
   def setup
-    @engine_csvs = SalesEngine.from_csv(
+    engine = SalesEngine.from_csv(
       items: './data/small_items.csv',
       merchants: './data/small_merchants.csv'
     )
-    @merchant_repo = @engine_csvs.merchants
+    @merchant_repo = engine.merchants
   end
 
   def test_it_exists
@@ -51,13 +51,13 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal 3, result1.size
     expected1 = %w[GoldenRayPress Princessfrankknits WellnessNeelsen]
     assert_equal expected1.first, result1.first.name
-    assert_equal expected1.last, result1.last.name
+    assert_equal expected1.last,  result1.last.name
 
     result2 = merchant_repo.find_all_by_name('art')
     assert_equal 3, result2.size
     expected2 = %w[Candisart SassyStrangeArt esellermart]
     assert_equal expected2.first, result2.first.name
-    assert_equal expected2.last, result2.last.name
+    assert_equal expected2.last,  result2.last.name
 
     assert_equal [], merchant_repo.find_all_by_name('nil example')
   end
@@ -76,25 +76,25 @@ class MerchantRepositoryTest < Minitest::Test
 
     merchant_repo.create(name: 'AtomStore')
     result2 = merchant_repo.find_by_id(12334265)
-    assert_equal 12334265, result2.id
+    assert_equal 12334265,    result2.id
     assert_equal 'AtomStore', result2.name
 
     merchant_repo.create(name: 'FunStore Name!')
     result3 = merchant_repo.find_by_id(12334266)
-    assert_equal 12334266, result3.id
+    assert_equal 12334266,         result3.id
     assert_equal 'FunStore Name!', result3.name
   end
 
   def test_can_search_by_id_and_update_name_attribute
     result1 = merchant_repo.find_by_name('Shopin1901')
     assert_equal 'Shopin1901', result1.name
-    assert_equal 12334105, result1.id
+    assert_equal 12334105,     result1.id
 
     merchant_repo.update(12334105, name: 'Shoppein1799')
     assert_nil merchant_repo.find_by_name('Shopin1901')
 
     result2 = merchant_repo.find_by_name('Shoppein1799')
-    assert_equal 12334105, result2.id
+    assert_equal 12334105,       result2.id
     assert_equal 'Shoppein1799', result2.name
   end
 
