@@ -39,8 +39,6 @@ module Repository
     instances.delete(instance)
   end
 
-<<<<<<< HEAD
-=======
   def create_new_instance_with_dates(instances, attributes, klass)
     new_id = (instances.map(&:id).max + 1)
     attributes[:id] = new_id
@@ -50,5 +48,5 @@ module Repository
     end
     instances << klass.new(attributes, self)
   end
->>>>>>> 8332c6ebd163ab3d2cbf89ae68aa6341f96593a0
+
 end
