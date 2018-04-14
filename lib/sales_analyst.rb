@@ -1,5 +1,4 @@
 require_relative 'math_wizard'
-require 'pry'
 
 # :nodoc:
 class SalesAnalyst
