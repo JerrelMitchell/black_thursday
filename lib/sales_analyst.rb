@@ -65,6 +65,6 @@ class SalesAnalyst
       difference = (item.unit_price - average_average_price_per_merchant).to_f
       item if difference > average_items_price_standard_deviation * 2
     end.compact
-  [items[0], items[1], items[2], items[3], items[4]]
+  #[items[0], items[1], items[2], items[3], items[4]]
   end
 end
