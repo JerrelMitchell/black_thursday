@@ -1,47 +1,38 @@
-require 'csv'
+require_relative 'file_loader'
+require_relative 'repository'
 require_relative 'merchant'
 require_relative 'repository'
 
 # robocomment
 class MerchantRepository
+
+  include FileLoader
   include Repository
   attr_reader :merchants, :parent
   def initialize(filepath, parent)
     @merchants = []
     @parent = parent
-    load_merchants(filepath)
-  end
-
-  def load_merchants(filepath)
-    CSV.foreach(filepath,
-                headers: true,
-                header_converters: :symbol) do |row|
-      @merchants << Merchant.new(row, self)
-    end
+    load_attributes(filepath, @merchants, Merchant)
   end
 
   def all
-    @merchants
+    find_all_instances(@merchants)
   end
 
   def find_by_id(id)
-    @merchants.find do |merchant|
-      return nil if merchant.id.nil?
-      merchant.id == id
-    end
+    find_by_instance_id(@merchants, id)
   end
 
   def find_by_name(name)
-    find_by_attribute_name(@merchants, name)
+    find_by_instance_name(@merchants, name)
+  end
+
+  def delete(id)
+    delete_instance(@merchants, id)
   end
 
   def find_all_by_name(name)
     find_all_by_attribute_name(@merchants, name)
-  end
-
-  def delete(id)
-    merchant_instance = find_by_id(id)
-    @merchants.delete(merchant_instance)
   end
 
   def create(attributes)
@@ -51,9 +42,9 @@ class MerchantRepository
   end
 
   def update(id, attributes)
-    current = find_by_id(id)
-    return nil if current.nil?
-    current.name = attributes[:name]
+    current_instance = find_by_id(id)
+    return nil if current_instance.nil?
+    current_instance.attributes[:name] = attributes[:name]
   end
 
   def inspect
