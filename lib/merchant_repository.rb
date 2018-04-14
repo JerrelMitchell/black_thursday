@@ -41,7 +41,6 @@ class MerchantRepository
   end
 
   def update(id, attributes)
-    return nil if find_by_id(id).nil?
     update_instance(id, attributes, @merchants, @unchangeable_keys)
   end
 

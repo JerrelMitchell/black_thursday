@@ -51,6 +51,7 @@ module Repository
 
   def update_instance(id, attributes, instances, unchangeable_keys)
     instance = find_by_instance_id(instances, id)
+    return nil if instance.nil?
     attributes.each do |key, value|
       next if (attributes.keys & unchangeable_keys).any?
       change_attribute(instance, key, value)
