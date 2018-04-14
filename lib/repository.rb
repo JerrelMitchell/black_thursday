@@ -12,6 +12,18 @@ module Repository
     end
   end
 
+  def find_all_with_instance_name(instances, name)
+    instances.find_all do |instance|
+      instance.name.downcase.include?(name.downcase)
+    end
+  end
+
+  def find_all_with_merchant_id(instances, id)
+    instances.find_all do |instance|
+      instance.attributes[:merchant_id].eql?(id)
+    end
+  end
+
   def find_all_with_instance_description(instances, description)
     instances.find_all do |instance|
       instance.attributes[:description].downcase.include?(description.downcase)

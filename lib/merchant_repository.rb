@@ -31,9 +31,7 @@ class MerchantRepository
   end
 
   def find_all_by_name(name)
-    @merchants.find_all do |merchant|
-      merchant.name.downcase.include?(name.downcase)
-    end
+    find_all_with_instance_name(@merchants, name)
   end
 
   def create(attributes)

@@ -39,9 +39,7 @@ class ItemRepository
   end
 
   def find_all_by_merchant_id(merchant_id)
-    @items.find_all do |item|
-      item.attributes[:merchant_id].eql?(merchant_id)
-    end
+    find_all_with_merchant_id(@items, merchant_id)
   end
 
   def delete(id)

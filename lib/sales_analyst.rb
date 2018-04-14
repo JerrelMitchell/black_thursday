@@ -1,4 +1,5 @@
 require_relative 'math_wizard'
+require 'pry'
 
 # :nodoc:
 class SalesAnalyst
@@ -60,11 +61,22 @@ class SalesAnalyst
     average(result, merchants.length)
   end
 
+  def found_max_price
+    @sales_engine.items.all.map(&:unit_price).max.to_i
+  end
+
+  def prices_list
+    @sales_engine.items.all.map(&:unit_price)
+  end
+
+  def standard_deviation_of_item_price
+    standard_deviation(prices_list, average_average_price_per_merchant)
+  end
+
   def golden_items
-    # items.map do |item|
-    #   difference = (item.unit_price - average_average_price_per_merchant).to_f
-    #   item if difference > average_items_price_standard_deviation * 2
-    # end.compact
-  [items[0], items[1], items[2], items[3], items[4]]
+    std_dev = standard_deviation_of_item_price
+    price_of_item = average_average_price_per_merchant + (2 * std_dev)
+    price_range   = price_of_item.to_i..found_max_price
+    @sales_engine.items.find_all_by_price_in_range(price_range)
   end
 end
