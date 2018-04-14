@@ -15,7 +15,7 @@ class ItemRepository
   end
 
   def all
-    find_all_instances(@items)
+    @items
   end
 
   def find_by_id(id)
@@ -53,20 +53,7 @@ class ItemRepository
   end
 
   def update(id, attributes)
-    current_instance = find_by_id(id)
-    change_all_requested_attributes(current_instance, attributes)
-  end
-
-  def change_all_requested_attributes(current_instance, attributes)
-    attributes.each do |key, value|
-      next if (attributes.keys & @unchangeable_keys).any?
-      change_attribute(current_instance, key, value)
-    end
-  end
-
-  def change_attribute(item, key, value)
-    item.attributes[key]         = value if item.attributes.keys.include?(key)
-    item.attributes[:updated_at] = Time.now
+    update_instance(id, attributes, @items, @unchangeable_keys)
   end
 
   def inspect
