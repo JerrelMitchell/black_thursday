@@ -1,7 +1,6 @@
 require_relative 'file_loader'
 require_relative 'repository'
 require_relative 'merchant'
-require_relative 'repository'
 
 # robocomment
 class MerchantRepository
@@ -11,7 +10,7 @@ class MerchantRepository
   attr_reader :merchants, :parent
   def initialize(filepath, parent)
     @merchants = []
-    @parent = parent
+    @parent    = parent
     @unchangeable_keys = %I[id]
     load_attributes(filepath, @merchants, Merchant)
   end
@@ -21,7 +20,7 @@ class MerchantRepository
   end
 
   def find_by_id(id)
-    find_by_instance_id(@merchants, id)
+    find_with_id(@merchants, id)
   end
 
   def find_by_name(name)

@@ -1,9 +1,7 @@
-require 'bigdecimal'
 require 'time'
-
+# :nodoc:
 class Invoice
-  attr_reader :attributes,
-              :parent
+  attr_reader :attributes, :parent
 
   def initialize(invoice, parent)
     @attributes = {
@@ -40,6 +38,4 @@ class Invoice
   def updated_at
     attributes[:updated_at]
   end
-
-
 end

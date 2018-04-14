@@ -1,6 +1,6 @@
 # :nodoc:
 module Repository
-  def find_by_instance_id(instances, id)
+  def find_with_id(instances, id)
     instances.find do |instance|
       instance.attributes[:id] == id
     end
@@ -8,9 +8,16 @@ module Repository
 
   def find_by_instance_name(instances, name)
     instances.find do |instance|
-      instance.attributes[:name].downcase == name.downcase
+      instance.name.downcase.include?(name.downcase)
     end
   end
+
+  def find_all_with_status(instances, status)
+    instances.find_all do |instance|
+      instance.status.downcase.include?(status.downcase)
+    end
+  end
+
   def find_all_with_instance_name(instances, name)
     instances.find_all do |instance|
       instance.name.downcase.include?(name.downcase)
@@ -42,7 +49,7 @@ module Repository
   end
 
   def delete_instance(instances, id)
-    instance = find_by_instance_id(instances, id)
+    instance = find_with_id(instances, id)
     instances.delete(instance)
   end
 
@@ -61,7 +68,7 @@ module Repository
   end
 
   def update_instance(id, attributes, instances, unchangeable_keys)
-    instance = find_by_instance_id(instances, id)
+    instance = find_with_id(instances, id)
     return nil if instance.nil?
     attributes.each do |key, value|
       next if (attributes.keys & unchangeable_keys).any?
