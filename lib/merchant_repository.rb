@@ -36,7 +36,7 @@ class MerchantRepository
   end
 
   def create(attributes)
-    create_new_instance_with_dates(@merchants, attributes, Merchant)
+    create_new_instance(@merchants, attributes, Merchant)
   end
 
   def update(id, attributes)

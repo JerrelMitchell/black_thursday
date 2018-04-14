@@ -49,7 +49,7 @@ class ItemRepository
   end
 
   def create(attributes)
-    create_new_instance_with_dates(@items, attributes, Item)
+    create_new_instance(@items, attributes, Item)
   end
 
   def update(id, attributes)
