@@ -2,9 +2,11 @@ require 'csv'
 require 'time'
 require 'bigdecimal'
 require_relative 'item'
+require_relative 'repository'
 
 # :nodoc:
 class ItemRepository
+  include Repository
   attr_reader :items
   def initialize(filepath, parent)
     @items = []
@@ -19,37 +21,27 @@ class ItemRepository
   end
 
   def all
-    @items
+    find_all_attributes(@items)
   end
 
   def find_by_id(id)
-    @items.find do |item|
-      item.id == id
-    end
+    find_by_attribute_id(@items, id)
   end
 
   def find_by_name(name)
-    @items.find do |item|
-      item.name.downcase == name.downcase
-    end
+    find_by_attribute_name(@items, name)
   end
 
   def find_all_with_description(description)
-    @items.find_all do |item|
-      item.description.downcase.include?(description.downcase)
-    end
+    find_all_with_attribute_description(@items, description)
   end
 
   def find_all_by_price(price)
-    @items.find_all do |item|
-      item.unit_price.eql?(price)
-    end
+    find_all_by_attribute_price(@items, price)
   end
 
   def find_all_by_price_in_range(price_range)
-    @items.find_all do |item|
-      price_range.include?(item.unit_price)
-    end
+    find_all_attributes_in_price_range(@items, price_range)
   end
 
   def find_all_by_merchant_id(merchant_id)
@@ -59,8 +51,7 @@ class ItemRepository
   end
 
   def delete(id)
-    item_instance = find_by_id(id)
-    @items.delete(item_instance)
+    delete_attribute(@item, id)
   end
 
   def create(attributes)
