@@ -21,7 +21,7 @@ module Repository
     business_attributes.find_all do |business_attribute|
       business_attribute.name.downcase.include?(name.downcase)
     end
-  end 
+  end
 
   def find_all_with_attribute_description(business_attributes, description)
     business_attributes.find_all do |business_attribute|
