@@ -1,9 +1,5 @@
 # :nodoc:
 module Repository
-  def find_all_instances(instances)
-    instances
-  end
-
   def find_by_instance_id(instances, id)
     instances.find do |instance|
       instance.attributes[:id] == id
@@ -15,10 +11,15 @@ module Repository
       instance.attributes[:name].downcase == name.downcase
     end
   end
-
-  def find_all_by_instance_name(instances, name)
+  def find_all_with_instance_name(instances, name)
     instances.find_all do |instance|
-      instance.attributes[:name].downcase.include?(name.downcase)
+      instance.name.downcase.include?(name.downcase)
+    end
+  end
+
+  def find_all_with_merchant_id(instances, id)
+    instances.find_all do |instance|
+      instance.attributes[:merchant_id].eql?(id)
     end
   end
 
@@ -59,23 +60,18 @@ module Repository
     end
   end
 
+  def update_instance(id, attributes, instances, unchangeable_keys)
+    instance = find_by_instance_id(instances, id)
+    return nil if instance.nil?
+    attributes.each do |key, value|
+      next if (attributes.keys & unchangeable_keys).any?
+      change_attribute(instance, key, value)
+    end
+  end
 
-  #
-  # def update_instance
-  #   current_instance = find_by_id(id)
-  #   change_all_requested_attributes(current_instance, attributes)
-  # end
-  #
-  # def change_all_requested_attributes(current_instance, attributes)
-  #   attributes.each do |key, value|
-  #     next if (attributes.keys & @unchangeable_keys).any?
-  #     change_attribute(current_instance, key, value)
-  #   end
-  # end
-  #
-  # def change_attribute(item, key, value)
-  #   item.attributes[key] = value if item.attributes.keys.include?(key)
-  #   assign_if_key_exists(attributes)
-  # end
-
+  def change_attribute(instance, key, value)
+    instance.attributes[key] = value if instance.attributes.keys.include?(key)
+    assign_if_key_exists(instance.attributes)
+    instance.attributes[:updated_at] = Time.now
+  end
 end

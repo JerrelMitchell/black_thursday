@@ -40,4 +40,6 @@ class Invoice
   def updated_at
     attributes[:updated_at]
   end
+
+
 end

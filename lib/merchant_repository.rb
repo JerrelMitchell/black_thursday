@@ -12,11 +12,12 @@ class MerchantRepository
   def initialize(filepath, parent)
     @merchants = []
     @parent = parent
+    @unchangeable_keys = %I[id]
     load_attributes(filepath, @merchants, Merchant)
   end
 
   def all
-    find_all_instances(@merchants)
+    @merchants
   end
 
   def find_by_id(id)
@@ -32,7 +33,7 @@ class MerchantRepository
   end
 
   def find_all_by_name(name)
-    find_all_by_instance_name(@merchants, name)
+    find_all_with_instance_name(@merchants, name)
   end
 
   def create(attributes)
@@ -40,9 +41,7 @@ class MerchantRepository
   end
 
   def update(id, attributes)
-    current_instance = find_by_id(id)
-    return nil if current_instance.nil?
-    current_instance.attributes[:name] = attributes[:name]
+    update_instance(id, attributes, @merchants, @unchangeable_keys)
   end
 
   def inspect
