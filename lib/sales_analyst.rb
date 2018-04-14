@@ -74,9 +74,9 @@ class SalesAnalyst
   end
 
   def golden_items
-    std_dev = standard_deviation_of_item_price
-    price_of_item = average_average_price_per_merchant + (2 * std_dev)
-    price_range   = price_of_item.to_i..found_max_price
+    item_price_deviation = standard_deviation_of_item_price
+    item_price = average_average_price_per_merchant + (2 * item_price_deviation)
+    price_range = item_price.to_i..found_max_price
     @sales_engine.items.find_all_by_price_in_range(price_range)
   end
 end
