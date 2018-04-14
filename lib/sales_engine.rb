@@ -1,6 +1,6 @@
-require_relative 'merchant_repository'
-require_relative 'item_repository'
 require_relative 'sales_analyst'
+require_relative 'item_repository'
+require_relative 'merchant_repository'
 
 # :nodoc:
 class SalesEngine

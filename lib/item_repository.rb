@@ -1,23 +1,17 @@
-require 'csv'
-require 'time'
-require 'bigdecimal'
-require_relative 'item'
+require_relative 'file_loader'
 require_relative 'repository'
+require_relative 'item'
 
 # :nodoc:
 class ItemRepository
+  include FileLoader
   include Repository
   attr_reader :items
   def initialize(filepath, parent)
     @items = []
     @parent = parent
-    load_items(filepath)
-  end
-
-  def load_items(filepath)
-    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-      @items << Item.new(row, self)
-    end
+    @unchangeable_keys = %I[id item_id created_at]
+    load_attributes(filepath, @items, Item)
   end
 
   def all
@@ -46,37 +40,40 @@ class ItemRepository
 
   def find_all_by_merchant_id(merchant_id)
     @items.find_all do |item|
-      item.merchant_id.eql?(merchant_id)
+      item.attributes[:merchant_id].eql?(merchant_id)
     end
   end
 
   def delete(id)
-    delete_attribute(@item, id)
+    delete_attribute(@items, id)
   end
 
   def create(attributes)
-    highest_item = @items.max_by(&:id)
-    new_item_id = (highest_item.id + 1)
-    attributes[:id] = new_item_id
+    highest_item_id_instance = @items.max_by do |item|
+      item.attributes[:id]
+    end
+    new_item_id = (highest_item_id_instance.attributes[:id] + 1)
+    attributes[:id]         = new_item_id
     attributes[:created_at] = Time.now.to_s
     attributes[:updated_at] = Time.now.to_s
     @items << Item.new(attributes, self)
   end
 
   def update(id, attributes)
-    current = find_by_id(id)
-    unchanging_attributes = %i[id created_at merchant_id]
-    assign_attributes(current, attributes, unchanging_attributes)
+    current_instance = find_by_id(id)
+    change_all_requested_attributes(current_instance, attributes)
   end
 
-  def assign_attributes(current_item, attributes, unchanging_attributes)
-    attributes.each do
-      next if (attributes.keys & unchanging_attributes).any?
-      # current_item.name      = attributes[:name]
-      current_item.description = attributes[:description]
-      current_item.unit_price  = attributes[:unit_price]
-      current_item.updated_at  = Time.now
+  def change_all_requested_attributes(current_instance, attributes)
+    attributes.each do |key, value|
+      next if (attributes.keys & @unchangeable_keys).any?
+      change_attribute(current_instance, key, value)
     end
+  end
+
+  def change_attribute(item, key, value)
+    item.attributes[key]         = value if item.attributes.keys.include?(key)
+    item.attributes[:updated_at] = Time.now
   end
 
   def inspect

@@ -1,5 +1,4 @@
 require './test/test_helper'
-require_relative '../lib/item_repository'
 require_relative '../lib/sales_engine'
 
 # :nodoc:
@@ -7,8 +6,8 @@ class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repo
   def setup
     engine = SalesEngine.from_csv(
-      items: './data/small_items.csv',
-      merchants: './data/small_merchants.csv'
+      items: './fixtures/fixture_items.csv',
+      merchants: './fixtures/fixture_merchants.csv'
     )
     @item_repo = engine.items
   end
@@ -73,11 +72,12 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 'Harris - Cinnamon Buns', result1.name
     assert_equal 7.95,                     result1.unit_price_to_dollars
 
-    item_repo.update(263409041, description: 'Like Cinnamon, but more fun!',
+    item_repo.update(263409041, name: 'Sinnamon Bunz',
+                                description: 'Like Cinnamon, but more fun!',
                                 unit_price: '7')
 
-    result2 = item_repo.find_by_name('Harris - Cinnamon Buns')
-    assert_equal 'Harris - Cinnamon Buns',       result2.name
+    result2 = item_repo.find_by_name('Sinnamon Bunz')
+    assert_equal 'Sinnamon Bunz',                result2.name
     assert_equal 'Like Cinnamon, but more fun!', result2.description
     assert_equal 7.00,                           result2.unit_price_to_dollars
   end
@@ -119,7 +119,7 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 6,     result1.size
     assert_equal 3.99,  result1.first.unit_price_to_dollars
     assert_equal 4.95,  result1.last.unit_price_to_dollars
-    assert_equal 'Spenser - Dragon&#39;s Blood', result1.last.name
+    assert_equal 'Small wonky stoneware pot', result1[1].name
   end
 
   def test_it_can_find_all_instances_of_an_item_included_in_a_description

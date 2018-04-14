@@ -1,13 +1,12 @@
 require './test/test_helper'
-require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 
 # :nodoc:
 class SalesAnalystTest < Minitest::Test
   attr_reader :sales_analyst
   def setup
-    engine = SalesEngine.from_csv(items: './data/small_items.csv',
-                                   merchants: './data/small_merchants.csv')
+    engine = SalesEngine.from_csv(items: './fixtures/fixture_items.csv',
+                                  merchants: './fixtures/fixture_merchants.csv')
     @sales_analyst = engine.analyst
   end
 
@@ -45,7 +44,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 26.87, result.to_f
   end
 
-  def test_it_returns_collection_golden_items
+  def test_it_returns_collection_of_golden_items
     result = sales_analyst.golden_items
     assert_equal Array, result.class
     assert_equal Item, result.first.class

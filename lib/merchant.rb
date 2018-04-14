@@ -1,11 +1,18 @@
 # :nodoc:
 class Merchant
-  attr_reader :id, :parent
-  attr_accessor :name
+  attr_reader :attributes, :parent
   def initialize(merchant, parent)
-    @id     = merchant[:id].to_i
-    @name   = merchant[:name]
+    @attributes = { id:  merchant[:id].to_i,
+                    name:  merchant[:name] }
     @parent = parent
+  end
+
+  def id
+    attributes[:id]
+  end
+
+  def name
+    attributes[:name]
   end
 
   def items

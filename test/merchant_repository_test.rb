@@ -6,8 +6,8 @@ class MerchantRepositoryTest < Minitest::Test
   attr_reader :merchant_repo
   def setup
     engine = SalesEngine.from_csv(
-      items: './data/small_items.csv',
-      merchants: './data/small_merchants.csv'
+      items: './fixtures/fixture_items.csv',
+      merchants: './fixtures/fixture_merchants.csv'
     )
     @merchant_repo = engine.merchants
   end
