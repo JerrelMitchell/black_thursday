@@ -45,14 +45,37 @@ module Repository
     instances.delete(instance)
   end
 
-  def create_new_instance_with_dates(instances, attributes, klass)
+  def create_new_instance(instances, attributes, klass)
     new_id = (instances.map(&:id).max + 1)
     attributes[:id] = new_id
+    assign_if_key_exists(attributes)
+    instances << klass.new(attributes, self)
+  end
+
+  def assign_if_key_exists(attributes)
     if attributes.keys.include?(:description || :unit_price)
       attributes[:created_at] = Time.now.to_s
       attributes[:updated_at] = Time.now.to_s
     end
-    instances << klass.new(attributes, self)
   end
+
+
+  #
+  # def update_instance
+  #   current_instance = find_by_id(id)
+  #   change_all_requested_attributes(current_instance, attributes)
+  # end
+  #
+  # def change_all_requested_attributes(current_instance, attributes)
+  #   attributes.each do |key, value|
+  #     next if (attributes.keys & @unchangeable_keys).any?
+  #     change_attribute(current_instance, key, value)
+  #   end
+  # end
+  #
+  # def change_attribute(item, key, value)
+  #   item.attributes[key] = value if item.attributes.keys.include?(key)
+  #   assign_if_key_exists(attributes)
+  # end
 
 end
