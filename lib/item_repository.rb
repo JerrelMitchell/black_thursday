@@ -51,7 +51,8 @@ class ItemRepository
   end
 
   def delete(id)
-    delete_attribute(@item, id)
+    item_instance = find_by_id(id)
+    @items.delete(item_instance)
   end
 
   def create(attributes)

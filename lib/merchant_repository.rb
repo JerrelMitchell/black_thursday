@@ -1,8 +1,10 @@
 require 'csv'
 require_relative 'merchant'
+require_relative 'repository'
 
 # robocomment
 class MerchantRepository
+  include Repository
   attr_reader :merchants, :parent
   def initialize(filepath, parent)
     @merchants = []
@@ -30,16 +32,11 @@ class MerchantRepository
   end
 
   def find_by_name(name)
-    @merchants.find do |merchant|
-      return nil if merchant.name.nil?
-      merchant.name.downcase == name.downcase
-    end
+    find_by_attribute_name(@merchants, name)
   end
 
   def find_all_by_name(name)
-    @merchants.find_all do |merchant|
-      merchant.name.downcase.include?(name.downcase)
-    end
+    find_all_by_attribute_name(@merchants, name)
   end
 
   def delete(id)
