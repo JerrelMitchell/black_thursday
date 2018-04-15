@@ -46,18 +46,15 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 'shipped', result2.last.status
   end
 
+  def test_it_can_delete_invoice_instance_by_id
+    result = invoice_repo.find_by_id(5)
+    assert_equal 'pending', result.status
 
-  # def test_it_can_delete_invoice_instance_by_id
-  #   skip
-  #   result1  = invoice_repo.find_by_id(263406189)
-  #   expected = 'Small turquoise stoneware pot'
-  #   assert_equal expected, result1.name
-  #
-  #   invoice_repo.delete(263406189)
-  #
-  #   assert_nil invoice_repo.find_by_id(263406189)
-  # end
-  #
+    invoice_repo.delete(5)
+
+    assert_nil invoice_repo.find_by_id(5)
+  end
+
   # def test_can_create_new_invoice_instance_with_given_attributes
   #   skip
   #   assert_nil invoice_repo.find_by_id(263409042)
