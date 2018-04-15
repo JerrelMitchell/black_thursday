@@ -36,20 +36,4 @@ class InvoiceTest < Minitest::Test
     assert_equal updated_date, @invoice.attributes[:updated_at].to_s
   end
 
-  def test_it_can_find_invoice_by_id
-
-  end
-
-  def test_it_can_find_all_by_customer_id
-
-  end
-
-  def test_it_can_find_all_by_merchant
-
-  end
-
-  def test_it_can_find_all_by_status
-
-  end
-
 end
