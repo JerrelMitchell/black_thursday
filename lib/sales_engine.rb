@@ -1,10 +1,11 @@
 require_relative 'sales_analyst'
 require_relative 'item_repository'
 require_relative 'merchant_repository'
+require_relative 'invoice_repository'
 
 # :nodoc:
 class SalesEngine
-  attr_reader :items, :merchants
+  attr_reader :items, :merchants, :invoices
 
   def initialize(files)
     @items     = ItemRepository.new(files[:items], self)

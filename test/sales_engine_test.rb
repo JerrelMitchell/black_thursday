@@ -6,14 +6,16 @@ class SalesEngineTest < Minitest::Test
   attr_reader :engine
   def setup
     @engine = SalesEngine.from_csv(
-      items: './fixtures/fixture_items.csv',
-      merchants: './fixtures/fixture_merchants.csv'
+      items:     './fixtures/fixture_items.csv',
+      merchants: './fixtures/fixture_merchants.csv',
+      invoices:  './fixtures/fixture_invoices.csv'
     )
   end
 
   def test_has_instances_of_item_and_merchant_repositories
     assert_instance_of ItemRepository, engine.items
     assert_instance_of MerchantRepository, engine.merchants
+    assert_instance_of InvoiceRepository, engine.invoices
   end
 
   def test_it_has_attributes

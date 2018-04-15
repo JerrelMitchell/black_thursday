@@ -9,9 +9,9 @@ class InvoiceRepository
   attr_reader :invoices
   def initialize(filepath, parent)
     @invoices = []
-    @parent = parent
+    @parent   = parent
     @unchangeable_keys = %I[id invoice_id customer_id created_at merchant_id]
-    load_attributes(filepath, @invoices, Item)
+    load_attributes(filepath, @invoices, Invoice)
   end
 
   def all
@@ -19,7 +19,7 @@ class InvoiceRepository
   end
 
   def find_by_id(id)
-    find_by_instance_id(@invoices, id)
+    find_with_id(@invoices, id)
   end
 
   def find_all_by_customer_id(customer_id)
@@ -31,6 +31,7 @@ class InvoiceRepository
   end
 
   def find_all_by_status(status)
+    find_all_with_status(@invoices, status)
   end
 
   def delete(id)

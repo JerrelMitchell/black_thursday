@@ -19,7 +19,7 @@ class ItemRepository
   end
 
   def find_by_id(id)
-    find_by_instance_id(@items, id)
+    find_with_id(@items, id)
   end
 
   def find_by_name(name)
