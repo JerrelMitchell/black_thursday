@@ -92,8 +92,6 @@ class SalesAnalyst
     average(invoices.length, merchants.length).to_f
   end
 
-
-
   def average_average_invoices_per_merchant
     result = invoices.reduce(0) do |sum, invoice|
       sum + average_invoices_per_merchant
@@ -130,11 +128,11 @@ class SalesAnalyst
   end
 
   def find_invoices_with_merchant_id(id)
-    sales_engine.merchants.find_by_id(id).invoices
+    sales_engine.merchants.find_all_by_merchant_id(id).invoices
   end
 
   def average_invoice_count_for_merchant(id)
     return 0 if find_with_merchant_id(id).length.zero?
-    
+
   end
 end
