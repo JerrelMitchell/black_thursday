@@ -53,7 +53,7 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 2, result1.size
     assert(result1.all? { |invoice| invoice.merchant_id.eql?(12336163) })
 
-    merchant_id2 = 12336163
+    merchant_id2 = 12336113
     result2 = invoice_repo.find_all_by_merchant_id(merchant_id2)
     assert_equal 2, result2.size
     assert(result2.all? { |invoice| invoice.merchant_id == merchant_id2 })

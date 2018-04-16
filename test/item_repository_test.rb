@@ -86,29 +86,29 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_can_find_all_instances_of_items_by_price
     assert_equal [], item_repo.find_all_by_price(8.75)
 
-    result1 = item_repo.find_all_by_price(150)
-    assert_equal 4,      result1.size
-    assert_equal 150.00, result1.first.unit_price_to_dollars
+    price1 = 150.00
+    result1 = item_repo.find_all_by_price(price1)
+    assert_equal 4, result1.size
+    assert(result1.all? { |item| item.unit_price == price1 })
 
+    price2 = 12.00
     result2 = item_repo.find_all_by_price(12.00)
-    assert_equal 2,     result2.size
-    assert_equal 12.00, result2.last.unit_price_to_dollars
+    assert_equal 2, result2.size
+    assert(result2.all? { |item| item.unit_price == price2 })
   end
 
   def test_it_can_find_all_instances_of_items_by_merchant_id
     assert_equal [], item_repo.find_all_by_merchant_id(00000)
 
     result1 = item_repo.find_all_by_merchant_id(12334185)
-    assert_equal 3,        result1.size
-    assert_equal 12334185, result1.first.merchant_id
-    assert_equal 12334185, result1.last.merchant_id
+    assert_equal 3, result1.size
+    assert(result1.all? { |item| item.merchant_id.eql?(12334185) })
     assert_equal 'Glitter scrabble frames',     result1.first.name
     assert_equal 'Free standing Woden letters', result1.last.name
 
     result2 = item_repo.find_all_by_merchant_id(12334123)
-    assert_equal 10,       result2.size
-    assert_equal 12334123, result2.first.merchant_id
-    assert_equal 12334123, result2.last.merchant_id
+    assert_equal 10, result2.size
+    assert(result2.all? { |item| item.merchant_id.eql?(12334123) })
     assert_equal 'Adidas Breitner Super Fußballschuh', result2.first.name
     assert_equal 'Adidas Penarol Cup Fußballschuh',    result2.last.name
   end
