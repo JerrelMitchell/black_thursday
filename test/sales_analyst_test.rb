@@ -86,4 +86,8 @@ class SalesAnalystTest < Minitest::Test
     assert_equal Float, result_2.class
     assert_equal 59.5, result_2
   end
+
+  def test_it_can_count_sales_per_day
+    assert_instance_of Hash, sales_analyst.days_count
+  end
 end
