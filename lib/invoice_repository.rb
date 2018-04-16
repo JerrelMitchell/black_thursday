@@ -23,11 +23,11 @@ class InvoiceRepository
   end
 
   def find_all_by_customer_id(customer_id)
-    find_all_with_customer_id(@invoices, customer_id)
+    find_all_with_instance_key(@invoices, customer_id, :customer_id)
   end
 
   def find_all_by_merchant_id(merchant_id)
-    find_all_with_merchant_id(@invoices, merchant_id)
+    find_all_with_instance_key(@invoices, merchant_id, :merchant_id)
   end
 
   def find_all_by_status(status)

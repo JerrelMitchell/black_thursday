@@ -23,15 +23,15 @@ class ItemRepository
   end
 
   def find_by_name(name)
-    find_by_instance_name(@items, name)
+    find_by_instance_string(@items, name, :name)
   end
 
   def find_all_with_description(description)
-    find_all_with_instance_description(@items, description)
+    find_all_with_instance_string(@items, description, :description)
   end
 
   def find_all_by_price(price)
-    find_all_by_instance_price(@items, price)
+    find_all_with_instance_key(@items, price, :unit_price)
   end
 
   def find_all_by_price_in_range(price_range)
@@ -39,7 +39,7 @@ class ItemRepository
   end
 
   def find_all_by_merchant_id(merchant_id)
-    find_all_with_merchant_id(@items, merchant_id)
+    find_all_with_instance_key(@items, merchant_id, :merchant_id)
   end
 
   def delete(id)

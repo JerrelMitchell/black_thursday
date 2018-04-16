@@ -6,9 +6,9 @@ module Repository
     end
   end
 
-  def find_by_instance_name(instances, name)
+  def find_by_instance_string(instances, string, key)
     instances.find do |instance|
-      instance.name.downcase.include?(name.downcase)
+      instance.attributes[key].downcase.include?(string.downcase)
     end
   end
 
@@ -18,33 +18,15 @@ module Repository
     end
   end
 
-  def find_all_with_instance_name(instances, name)
+  def find_all_with_instance_key(instances, value, key)
     instances.find_all do |instance|
-      instance.name.downcase.include?(name.downcase)
+      instance.attributes[key].eql?(value)
     end
   end
 
-  def find_all_with_merchant_id(instances, id)
+  def find_all_with_instance_string(instances, string, key)
     instances.find_all do |instance|
-      instance.attributes[:merchant_id].eql?(id)
-    end
-  end
-
-  def find_all_with_customer_id(instances, customer_id)
-    instances.find_all do |instance|
-      instance.attributes[:customer_id].eql?(customer_id)
-    end
-  end
-
-  def find_all_with_instance_description(instances, description)
-    instances.find_all do |instance|
-      instance.attributes[:description].downcase.include?(description.downcase)
-    end
-  end
-
-  def find_all_by_instance_price(instances, price)
-    instances.find_all do |instance|
-      instance.attributes[:unit_price].eql?(price)
+      instance.attributes[key].downcase.include?(string.downcase)
     end
   end
 

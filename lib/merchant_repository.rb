@@ -23,7 +23,7 @@ class MerchantRepository
   end
 
   def find_by_name(name)
-    find_by_instance_name(@merchants, name)
+    find_by_instance_string(@merchants, name, :name)
   end
 
   def delete(id)
@@ -31,7 +31,7 @@ class MerchantRepository
   end
 
   def find_all_by_name(name)
-    find_all_with_instance_name(@merchants, name)
+    find_all_with_instance_string(@merchants, name, :name)
   end
 
   def create(attributes)
