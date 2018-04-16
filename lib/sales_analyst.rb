@@ -16,6 +16,10 @@ class SalesAnalyst
     sales_engine.items.all
   end
 
+  def invoices
+    sales_engine.invoices.all
+  end
+
   def all_item_prices
     items.map(&:unit_price)
   end
@@ -77,5 +81,15 @@ class SalesAnalyst
     item_price = average_average_price_per_merchant + (2 * item_price_deviation)
     price_range = item_price.to_i..found_max_price
     @sales_engine.items.find_all_by_price_in_range(price_range)
+  end
+
+  def average_invoices_per_merchant
+    average(invoices.length, merchants.length).to_f
+  end
+
+  def average_invoices_per_merchant_standard_deviation
+    all_invoices = merchants.map { |merchant| merchant.invoices.length }
+    standard_deviation(all_invoices, average_invoices_per_merchant).round(2)
+    binding.pry
   end
 end
