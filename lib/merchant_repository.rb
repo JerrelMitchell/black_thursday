@@ -4,7 +4,6 @@ require_relative 'merchant'
 
 # robocomment
 class MerchantRepository
-
   include FileLoader
   include Repository
   attr_reader :merchants, :parent

@@ -14,7 +14,7 @@ module Repository
 
   def find_all_with_status(instances, status)
     instances.find_all do |instance|
-      instance.status.downcase.include?(status.downcase)
+      instance.status == status
     end
   end
 
@@ -27,6 +27,12 @@ module Repository
   def find_all_with_merchant_id(instances, id)
     instances.find_all do |instance|
       instance.attributes[:merchant_id].eql?(id)
+    end
+  end
+
+  def find_all_with_customer_id(instances, customer_id)
+    instances.find_all do |instance|
+      instance.attributes[:customer_id].eql?(customer_id)
     end
   end
 
@@ -61,7 +67,7 @@ module Repository
   end
 
   def assign_if_key_exists(attributes)
-    if attributes.keys.include?(:description || :unit_price)
+    if attributes.keys.any? { |key| key == :description || key == :merchant_id }
       attributes[:created_at] = Time.now.to_s
       attributes[:updated_at] = Time.now.to_s
     end
@@ -77,6 +83,7 @@ module Repository
   end
 
   def change_attribute(instance, key, value)
+    value = value.to_sym if instance.attributes.key?(:status)
     instance.attributes[key] = value if instance.attributes.keys.include?(key)
     assign_if_key_exists(instance.attributes)
     instance.attributes[:updated_at] = Time.now

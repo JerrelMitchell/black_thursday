@@ -23,7 +23,7 @@ class InvoiceTest < Minitest::Test
     assert_equal 9,         invoice.id
     assert_equal 6,         invoice.customer_id
     assert_equal 2,         invoice.merchant_id
-    assert_equal 'pending', invoice.status
+    assert_equal :pending, invoice.status
   end
 
   def test_it_can_show_times_when_created_and_updated
@@ -32,5 +32,4 @@ class InvoiceTest < Minitest::Test
     assert_equal creation_date, invoice.created_at.to_s
     assert_equal updated_date,  invoice.updated_at.to_s
   end
-  
 end

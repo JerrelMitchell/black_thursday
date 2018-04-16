@@ -1,6 +1,5 @@
 require './test/test_helper'
 require_relative '../lib/sales_engine'
-require_relative '../lib/invoice_repository'
 
 # :nodoc:
 class InvoiceRepositoryTest < Minitest::Test
@@ -35,103 +34,80 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_nil result3
   end
 
-  def test_it_can_find_all_instances_of_invoices_by_price
+  def test_it_can_find_all_instances_of_invoices_by_status
     assert_equal [], invoice_repo.find_all_by_status('INVALID EXAMPLE SEARCH')
 
-    result1 = invoice_repo.find_all_by_status('RETURNED')
-    assert_equal 3,          result1.size
-    assert_equal 'returned', result1.first.status
+    result1 = invoice_repo.find_all_by_status(:returned)
+    assert_equal 3,         result1.size
+    assert_equal :returned, result1.first.status
 
-    result2 = invoice_repo.find_all_by_status('Shipped')
-    assert_equal 30,        result2.size
-    assert_equal 'shipped', result2.last.status
+    result2 = invoice_repo.find_all_by_status(:shipped)
+    assert_equal 30,       result2.size
+    assert_equal :shipped, result2.last.status
+  end
+
+  def test_it_can_find_all_instances_of_invoices_by_merchant_id
+    assert_equal [], invoice_repo.find_all_by_merchant_id(000000)
+
+    result1 = invoice_repo.find_all_by_merchant_id(12336163)
+    assert_equal 2, result1.size
+    assert(result1.all? { |invoice| invoice.merchant_id.eql?(12336163) })
+
+    merchant_id2 = 12336163
+    result2 = invoice_repo.find_all_by_merchant_id(merchant_id2)
+    assert_equal 2, result2.size
+    assert(result2.all? { |invoice| invoice.merchant_id == merchant_id2 })
+  end
+
+  def test_it_can_find_all_instances_of_invoices_by_customer_id
+    assert_equal [], invoice_repo.find_all_by_customer_id(00)
+
+    result1 = invoice_repo.find_all_by_customer_id(5)
+    assert_equal 8, result1.size
+    assert(result1.all? { |invoice| invoice.customer_id.eql?(5) })
+
+    customer_id2 = 2
+    result2 = invoice_repo.find_all_by_customer_id(customer_id2)
+    assert_equal 4, result2.size
+    assert(result2.all? { |invoice| invoice.customer_id == customer_id2 })
   end
 
   def test_it_can_delete_invoice_instance_by_id
     result = invoice_repo.find_by_id(5)
-    assert_equal 'pending', result.status
+    assert_equal :pending, result.status
 
     invoice_repo.delete(5)
 
     assert_nil invoice_repo.find_by_id(5)
   end
 
-  # def test_can_create_new_invoice_instance_with_given_attributes
-  #   skip
-  #   assert_nil invoice_repo.find_by_id(263409042)
-  #
-  #   invoice_repo.create(name: 'Awesome Tissue Box',
-  #                    description: "It's a tissue box that's awesome!",
-  #                    unit_price: '9900')
-  #
-  #   result1 = invoice_repo.find_by_id(263409042)
-  #   assert_equal 'Awesome Tissue Box', result1.name
-  #   assert_equal 263409042,            result1.id
-  #   assert_equal 99.00,                result1.unit_price_to_dollars
-  # end
-  #
-  # def test_can_search_by_id_and_update_attributes
-  #   skip
-  #   result1 = invoice_repo.find_by_name('Harris - Cinnamon Buns')
-  #
-  #   assert_equal 'Harris - Cinnamon Buns', result1.name
-  #   assert_equal 7.95,                     result1.unit_price_to_dollars
-  #
-  #   invoice_repo.update(263409041, name: 'Sinnamon Bunz',
-  #                               description: 'Like Cinnamon, but more fun!',
-  #                               unit_price: '7')
-  #
-  #   result2 = invoice_repo.find_by_name('Sinnamon Bunz')
-  #   assert_equal 'Sinnamon Bunz',                result2.name
-  #   assert_equal 'Like Cinnamon, but more fun!', result2.description
-  #   assert_equal 7.00,                           result2.unit_price_to_dollars
-  # end
-  #
-  # def test_it_can_find_all_instances_of_invoices_by_price
-  #   skip
-  #   assert_equal [], invoice_repo.find_all_by_price(8.75)
-  #
-  #   result1 = invoice_repo.find_all_by_price(150)
-  #   assert_equal 4,      result1.size
-  #   assert_equal 150.00, result1.first.unit_price_to_dollars
-  #
-  #   result2 = invoice_repo.find_all_by_price(12.00)
-  #   assert_equal 2,     result2.size
-  #   assert_equal 12.00, result2.last.unit_price_to_dollars
-  # end
-  #
-  # def test_it_can_find_all_instances_of_invoices_by_merchant_id
-  #   skip
-  #   assert_equal [], invoice_repo.find_all_by_merchant_id(00000)
-  #
-  #   result1 = invoice_repo.find_all_by_merchant_id(12334185)
-  #   assert_equal 3,        result1.size
-  #   assert_equal 12334185, result1.first.merchant_id
-  #   assert_equal 12334185, result1.last.merchant_id
-  #   assert_equal 'Glitter scrabble frames',     result1.first.name
-  #   assert_equal 'Free standing Woden letters', result1.last.name
-  #
-  #   result2 = invoice_repo.find_all_by_merchant_id(12334123)
-  #   assert_equal 10,       result2.size
-  #   assert_equal 12334123, result2.first.merchant_id
-  #   assert_equal 12334123, result2.last.merchant_id
-  #   assert_equal 'Adidas Breitner Super Fußballschuh', result2.first.name
-  #   assert_equal 'Adidas Penarol Cup Fußballschuh',    result2.last.name
-  # end
-  #
-  # def test_it_can_find_all_instances_of_invoices_in_a_price_range
-  #   skip
-  #   assert_equal [], invoice_repo.find_all_by_price_in_range(0..0.1)
-  #
-  #   result1 = invoice_repo.find_all_by_price_in_range(0..5)
-  #   assert_equal 6,     result1.size
-  #   assert_equal 3.99,  result1.first.unit_price_to_dollars
-  #   assert_equal 4.95,  result1.last.unit_price_to_dollars
-  #   assert_equal 'Small wonky stoneware pot', result1[1].name
-  # end
-  #
-  # def test_it_can_inspect_how_many_rows_of_instances_are_within_itself
-  #   skip
-  #   assert_equal '#<InvoiceRepository 94 rows>', invoice_repo.inspect
-  # end
+  def test_can_search_by_invoice_id_and_update_attributes
+    result1 = invoice_repo.find_by_id(5)
+    assert_equal :pending, result1.status
+
+    invoice_repo.update(5, status: 'delivered')
+
+    result2 = invoice_repo.find_by_id(5)
+    assert_equal :delivered, result2.status
+  end
+
+  def test_can_create_new_invoice_instance_with_given_attributes
+    assert_nil invoice_repo.find_by_id(51)
+
+    invoice_repo.create(
+      customer_id: 10,
+      merchant_id: 12336299,
+      status:      :pending
+    )
+
+    result1 = invoice_repo.find_by_id(51)
+    assert_equal :pending, result1.status
+    assert_equal 51,       result1.id
+    assert_equal 10,       result1.customer_id
+    assert_equal 12336299, result1.merchant_id
+  end
+
+  def test_can_inspect_number_of_self_instances
+    assert_equal '#<InvoiceRepository 50 rows>', invoice_repo.inspect
+  end
 end
