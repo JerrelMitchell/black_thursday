@@ -112,10 +112,18 @@ class SalesAnalyst
   end
 
   def standard_deviation_of_invoice_count
-    standard_deviation(invoices.count / average_average_invoices_per_merchant)
+    standard_deviation(total_invoices_per_merchant, average_average_invoices_per_merchant)
   end
 
   def top_merchants_by_invoice_count
     invoice_count_deviation = standard_deviation_of_invoice_count
+    average_invoices = average_invoices_per_merchant
+    bottom_range = (invoice_count_deviation * 2) + average_invoices
+    merchants.map do |merchant|
+      binding.pry
+      
+      # amount = merchants.find_by_id(merchant.id).invoices.length
+      # merchant if amount > bottom_range
+    end
   end
 end
