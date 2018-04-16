@@ -83,6 +83,12 @@ class SalesAnalyst
     @sales_engine.items.find_all_by_price_in_range(price_range)
   end
 
+  def total_invoices_per_merchant
+    merchant_ids = @sales_engine.invoices.all.group_by(&:merchant_id)
+    merchant_ids.count
+      binding.pry
+  end
+
   def average_invoices_per_merchant
     average(invoices.length, merchants.length).to_f
   end
@@ -97,5 +103,12 @@ class SalesAnalyst
       invoice.attributes[:status] == status
     end
     ((matching_invoices.length.to_f / invoices.length) * 100).round(2)
+  end
+
+  def top_merchants_by_invoice_count
+    item_price_deviation = standard_deviation_of_item_price
+    item_price = average_average_price_per_merchant + (2 * item_price_deviation)
+    price_range = item_price.to_i..found_max_price
+    @sales_engine.items.find_all_by_price_in_range(price_range)
   end
 end

@@ -60,6 +60,11 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 2, result.size
   end
 
+  def test_it_returns_total_invoices_per_merchant
+    result = sales_analyst.total_invoices_per_merchant
+    assert_equal Array, result.class
+  end 
+
   def test_it_returns_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant
     assert_equal Float, result.class
@@ -80,5 +85,12 @@ class SalesAnalystTest < Minitest::Test
     result_2 = sales_analyst.invoice_status(:shipped)
     assert_equal Float, result_2.class
     assert_equal 60.0, result_2
+  end
+
+  def test_it_returns_top_merchants_by_invoice_count
+    result = sales_analyst.top_merchants_by_invoice_count
+    assert_equal Array, result.class
+    assert_equal Item, result.first.class
+    assert_equal 2, result.size
   end
 end
