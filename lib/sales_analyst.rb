@@ -84,9 +84,8 @@ class SalesAnalyst
   end
 
   def total_invoices_per_merchant
-    merchant_ids = @sales_engine.invoices.all.group_by(&:merchant_id)
-    merchant_ids.count
-      binding.pry
+    invoices_grouped_by_merchant_ids = @sales_engine.invoices.all.group_by(&:merchant_id)
+    binding.pry
   end
 
   def average_invoices_per_merchant

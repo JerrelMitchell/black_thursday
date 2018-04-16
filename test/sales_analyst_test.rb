@@ -63,7 +63,8 @@ class SalesAnalystTest < Minitest::Test
   def test_it_returns_total_invoices_per_merchant
     result = sales_analyst.total_invoices_per_merchant
     assert_equal Array, result.class
-  end 
+    assert_equal 46, total_invoices_per_merchant
+  end
 
   def test_it_returns_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant
