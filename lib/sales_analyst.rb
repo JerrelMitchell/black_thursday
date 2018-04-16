@@ -112,7 +112,8 @@ class SalesAnalyst
   end
 
   def top_merchants_by_invoice_count
-    item_price_deviation = standard_deviation_of_item_price
+    merchant_invoice_deviation = average_invoices_per_merchant_standard_deviation
+
     item_price = average_average_price_per_merchant + (2 * item_price_deviation)
     price_range = item_price.to_i..found_max_price
     @sales_engine.items.find_all_by_price_in_range(price_range)
