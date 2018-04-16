@@ -92,6 +92,13 @@ class SalesAnalyst
     average(invoices.length, merchants.length).to_f
   end
 
+  def average_average_invoices_per_merchant
+    result = invoices.reduce(0) do |sum, invoice|
+      sum + average_invoices_per_merchant
+    end
+    average(result, invoices.length)
+  end
+
   def average_invoices_per_merchant_standard_deviation
     all_invoices = merchants.map { |merchant| merchant.invoices.length }
     standard_deviation(all_invoices, average_invoices_per_merchant).round(2)
