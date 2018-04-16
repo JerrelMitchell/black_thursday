@@ -120,10 +120,11 @@ class SalesAnalyst
     average_invoices = average_invoices_per_merchant
     bottom_range = (invoice_count_deviation * 2) + average_invoices
     merchants.map do |merchant|
-      binding.pry
-      
+      amount = @sales_engine.merchants.find_by_id(merchant.id).invoices.length
+      merchant if amount > bottom_range
+      #binding.pry
       # amount = merchants.find_by_id(merchant.id).invoices.length
       # merchant if amount > bottom_range
-    end
+    end.compact
   end
 end
