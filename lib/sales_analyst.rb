@@ -91,4 +91,14 @@ class SalesAnalyst
     all_invoices = merchants.map { |merchant| merchant.invoices.length }
     standard_deviation(all_invoices, average_invoices_per_merchant).round(2)
   end
+
+  def invoice_status(status)
+    amount_of_invoices = merchants.each do |merchant|
+      next if merchant.invoices.empty?
+      binding.pry
+      merchant.invoices.length
+    end
+    matching_invoices = merchants.map { |merchant|  }
+    matching_invoices.length.to_f / 100
+  end
 end
