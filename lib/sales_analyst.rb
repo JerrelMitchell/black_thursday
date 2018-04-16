@@ -93,12 +93,9 @@ class SalesAnalyst
   end
 
   def invoice_status(status)
-    amount_of_invoices = merchants.each do |merchant|
-      next if merchant.invoices.empty?
-      binding.pry
-      merchant.invoices.length
+    matching_invoices = invoices.find_all do |invoice|
+      invoice.attributes[:status] == status
     end
-    matching_invoices = merchants.map { |merchant|  }
-    matching_invoices.length.to_f / 100
+    ((matching_invoices.length.to_f / invoices.length) * 100).round(2)
   end
 end
