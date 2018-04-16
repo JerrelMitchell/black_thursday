@@ -92,6 +92,8 @@ class SalesAnalyst
     average(invoices.length, merchants.length).to_f
   end
 
+
+
   def average_average_invoices_per_merchant
     result = invoices.reduce(0) do |sum, invoice|
       sum + average_invoices_per_merchant
@@ -122,9 +124,17 @@ class SalesAnalyst
     merchants.map do |merchant|
       amount = @sales_engine.merchants.find_by_id(merchant.id).invoices.length
       merchant if amount > bottom_range
-      #binding.pry
       # amount = merchants.find_by_id(merchant.id).invoices.length
       # merchant if amount > bottom_range
     end.compact
+  end
+
+  def find_invoices_with_merchant_id(id)
+    sales_engine.merchants.find_by_id(id).invoices
+  end
+
+  def average_invoice_count_for_merchant(id)
+    return 0 if find_with_merchant_id(id).length.zero?
+    
   end
 end
