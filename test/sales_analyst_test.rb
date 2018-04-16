@@ -69,6 +69,6 @@ class SalesAnalystTest < Minitest::Test
   def test_it_calculates_standard_deviation_for_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant_standard_deviation
     assert_equal Float, result.class
-    assert_equal 2.54, result
+    assert_equal 1.25, result
   end
 end

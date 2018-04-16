@@ -90,6 +90,5 @@ class SalesAnalyst
   def average_invoices_per_merchant_standard_deviation
     all_invoices = merchants.map { |merchant| merchant.invoices.length }
     standard_deviation(all_invoices, average_invoices_per_merchant).round(2)
-    binding.pry
   end
 end

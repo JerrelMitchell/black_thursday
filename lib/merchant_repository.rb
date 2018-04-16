@@ -46,7 +46,11 @@ class MerchantRepository
     "#<#{self.class} #{@merchants.size} rows>"
   end
 
-  def collect_id_for_instance(id)
+  def collect_id_for_items(id)
     parent.collect_items_by_merchant_id(id)
+  end
+
+  def collect_id_for_invoices(id)
+    parent.collect_invoices_by_merchant_id(id)
   end
 end

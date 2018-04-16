@@ -21,6 +21,10 @@ class SalesEngine
     SalesAnalyst.new(self)
   end
 
+  def collect_invoices_by_merchant_id(id)
+    invoices.find_all_by_merchant_id(id)
+  end
+
   def collect_items_by_merchant_id(id)
     items.find_all_by_merchant_id(id)
   end
