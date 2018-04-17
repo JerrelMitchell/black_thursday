@@ -1,6 +1,6 @@
 class Customer
   attr_reader :attributes
-  def initialize(customer)
+  def initialize(customer, parent)
     @attributes = ({
       :id => customer[:id].to_i,
       :first_name => customer[:first_name],
