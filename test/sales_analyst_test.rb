@@ -60,41 +60,30 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 2, result.size
   end
 
-  def test_it_returns_total_invoices_per_merchant
-    result = sales_analyst.total_invoices_per_merchant
+  def test_it_returns_total_invoices_for_merchants
+    result = sales_analyst.total_invoices_for_merchants
     assert_equal Array, result.class
   end
 
   def test_it_returns_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant
     assert_equal Float, result.class
-    assert_equal 1.28, result
+    assert_equal 5.13, result
   end
 
   def test_it_calculates_standard_deviation_for_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant_standard_deviation
     assert_equal Float, result.class
-    assert_equal 1.25, result
+    assert_equal 4.84, result
   end
 
   def test_it_calculates_the_percentage_of_invoices_with_given_status
     result_1 = sales_analyst.invoice_status(:pending)
     assert_equal Float, result_1.class
-    assert_equal 34.0, result_1
+    assert_equal 29.00, result_1
 
     result_2 = sales_analyst.invoice_status(:shipped)
     assert_equal Float, result_2.class
-    assert_equal 60.0, result_2
-  end
-
-  def test_it_returns_top_merchants_by_invoice_count
-    result = sales_analyst.top_merchants_by_invoice_count
-    assert_equal Array, result.class
-    assert_equal Item, result.first.class
-    assert_equal 2, result.size
-  end
-
-  def test_average_average_invoice_per_merchant
-    assert_equal BigDecimal, sales_analyst.average_average_invoices_per_merchant.class
+    assert_equal 59.5, result_2
   end
 end

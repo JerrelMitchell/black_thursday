@@ -19,7 +19,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_it_has_all_invoices_in_array_and_all_invoices_are_invoices
     assert_instance_of Array, invoice_repo.all
-    assert_equal 50, invoice_repo.all.count
+    assert_equal 200, invoice_repo.all.count
     assert(invoice_repo.all.all? { |invoice| invoice.is_a?(Invoice) })
   end
 
@@ -38,11 +38,11 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal [], invoice_repo.find_all_by_status('INVALID EXAMPLE SEARCH')
 
     result1 = invoice_repo.find_all_by_status(:returned)
-    assert_equal 3,         result1.size
+    assert_equal 23,        result1.size
     assert_equal :returned, result1.first.status
 
     result2 = invoice_repo.find_all_by_status(:shipped)
-    assert_equal 30,       result2.size
+    assert_equal 119,      result2.size
     assert_equal :shipped, result2.last.status
   end
 
@@ -92,7 +92,7 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_can_create_new_invoice_instance_with_given_attributes
-    assert_nil invoice_repo.find_by_id(51)
+    assert_nil invoice_repo.find_by_id(201)
 
     invoice_repo.create(
       customer_id: 10,
@@ -100,14 +100,14 @@ class InvoiceRepositoryTest < Minitest::Test
       status:      :pending
     )
 
-    result1 = invoice_repo.find_by_id(51)
+    result1 = invoice_repo.find_by_id(201)
     assert_equal :pending, result1.status
-    assert_equal 51,       result1.id
+    assert_equal 201,       result1.id
     assert_equal 10,       result1.customer_id
     assert_equal 12336299, result1.merchant_id
   end
 
   def test_can_inspect_number_of_self_instances
-    assert_equal '#<InvoiceRepository 50 rows>', invoice_repo.inspect
+    assert_equal '#<InvoiceRepository 200 rows>', invoice_repo.inspect
   end
 end
