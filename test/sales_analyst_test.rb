@@ -97,5 +97,5 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_can_return_top_weekday
     assert_equal "Saturday", sales_analyst.top_days_by_invoice_count
-  end 
+  end
 end
