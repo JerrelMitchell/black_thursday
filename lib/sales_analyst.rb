@@ -157,13 +157,13 @@ class SalesAnalyst
     amount = standard_deviation + average
     days_count.select do |amount, value|
       value > amount
+      binding.pry
     end
   end
 
   def top_days_by_invoice_count
     top_days = days_sales.max_by do |value|
       value
-      #binding.pry
     end
     top_days.map do |day|
       Date::DAYNAMES[day]
