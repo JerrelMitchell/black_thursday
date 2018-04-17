@@ -90,4 +90,12 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_count_sales_per_day
     assert_instance_of Hash, sales_analyst.days_count
   end
+
+  def test_it_can_find_standard_deviation_by_weekday
+    assert_equal 5.66, sales_analyst.standard_deviation_of_invoices_by_wday
+  end
+
+  def test_it_can_return_top_weekday
+    assert_equal "Saturday", sales_analyst.top_days_by_invoice_count
+  end 
 end
