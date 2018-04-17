@@ -30,7 +30,7 @@ class InvoiceRepositoryTest < Minitest::Test
     result2 = invoice_repo.find_by_id(44)
     assert_equal 44, result2.id
 
-    result3 = invoice_repo.find_by_id(000)
+    result3 = invoice_repo.find_by_id(0)
     assert_nil result3
   end
 
@@ -47,29 +47,27 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_instances_of_invoices_by_merchant_id
-    assert_equal [], invoice_repo.find_all_by_merchant_id(000000)
+    assert_equal [], invoice_repo.find_all_by_merchant_id(0)
 
     result1 = invoice_repo.find_all_by_merchant_id(12336163)
     assert_equal 2, result1.size
-    assert(result1.all? { |invoice| invoice.merchant_id.eql?(12336163) })
+    assert(result1.all? { |invoice| invoice.merchant_id == (12336163) })
 
-    merchant_id2 = 12336113
-    result2 = invoice_repo.find_all_by_merchant_id(merchant_id2)
+    result2 = invoice_repo.find_all_by_merchant_id(12336113)
     assert_equal 2, result2.size
-    assert(result2.all? { |invoice| invoice.merchant_id == merchant_id2 })
+    assert(result2.all? { |invoice| invoice.merchant_id == (12336113) })
   end
 
-  def test_it_can_find_all_instances_of_invoices_by_customer_id
+  def test_it_can_find_all_instances_of_invoices_by_customer_idxw
     assert_equal [], invoice_repo.find_all_by_customer_id(00)
 
     result1 = invoice_repo.find_all_by_customer_id(5)
     assert_equal 8, result1.size
-    assert(result1.all? { |invoice| invoice.customer_id.eql?(5) })
+    assert(result1.all? { |invoice| invoice.customer_id == 5 })
 
-    customer_id2 = 2
-    result2 = invoice_repo.find_all_by_customer_id(customer_id2)
+    result2 = invoice_repo.find_all_by_customer_id(2)
     assert_equal 4, result2.size
-    assert(result2.all? { |invoice| invoice.customer_id == customer_id2 })
+    assert(result2.all? { |invoice| invoice.customer_id == 2 })
   end
 
   def test_it_can_delete_invoice_instance_by_id
@@ -89,6 +87,11 @@ class InvoiceRepositoryTest < Minitest::Test
 
     result2 = invoice_repo.find_by_id(5)
     assert_equal :delivered, result2.status
+
+    invoice_repo.update(5, status: 'returned')
+
+    result3 = invoice_repo.find_by_id(5)
+    assert_equal :returned, result3.status
   end
 
   def test_can_create_new_invoice_instance_with_given_attributes
@@ -102,7 +105,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
     result1 = invoice_repo.find_by_id(201)
     assert_equal :pending, result1.status
-    assert_equal 201,       result1.id
+    assert_equal 201,      result1.id
     assert_equal 10,       result1.customer_id
     assert_equal 12336299, result1.merchant_id
   end

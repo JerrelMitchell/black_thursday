@@ -78,12 +78,12 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_calculates_the_percentage_of_invoices_with_given_status
-    result_1 = sales_analyst.invoice_status(:pending)
-    assert_equal Float, result_1.class
-    assert_equal 29.00, result_1
+    result1 = sales_analyst.invoice_status(:pending)
+    assert_equal Float, result1.class
+    assert_equal 29.00, result1
 
-    result_2 = sales_analyst.invoice_status(:shipped)
-    assert_equal Float, result_2.class
-    assert_equal 59.5, result_2
+    result2 = sales_analyst.invoice_status(:shipped)
+    assert_equal Float, result2.class
+    assert_equal 59.5, result2
   end
 end

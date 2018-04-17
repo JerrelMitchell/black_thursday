@@ -43,7 +43,7 @@ class MerchantRepository
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    inspect_instance(self, @merchants)
   end
 
   def collect_id_for_items(id)

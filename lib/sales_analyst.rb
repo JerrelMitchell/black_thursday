@@ -24,6 +24,14 @@ class SalesAnalyst
     items.map(&:unit_price)
   end
 
+  def found_max_price
+    sales_engine.items.all.map(&:unit_price).max.to_i
+  end
+
+  def prices_list
+    sales_engine.items.all.map(&:unit_price)
+  end
+
   def find_items_with_merchant_id(id)
     sales_engine.merchants.find_by_id(id).items
   end
@@ -32,8 +40,30 @@ class SalesAnalyst
     sales_engine.invoices.find_all_by_merchant_id(id)
   end
 
+  def average_invoices_per_merchant
+    average(invoices.length, merchants.length).to_f
+  end
+
   def average_items_per_merchant
     average(items.length, merchants.length).to_f
+  end
+
+  def average_items_price_standard_deviation
+    standard_deviation(all_item_prices, average_average_price_per_merchant)
+  end
+
+  def standard_deviation_of_item_price
+    standard_deviation(prices_list, average_average_price_per_merchant)
+  end
+
+  def standard_deviation_of_invoice_count
+    standard_deviation(total_invoices_for_merchants,
+                       average_average_invoices_per_merchant)
+  end
+
+  def average_invoices_per_merchant_standard_deviation
+    invoice_list = total_invoices_for_merchants
+    standard_deviation(invoice_list, average_invoices_per_merchant).round(2)
   end
 
   def average_items_per_merchant_standard_deviation
@@ -41,17 +71,10 @@ class SalesAnalyst
     standard_deviation(all_items, average_items_per_merchant).round(2)
   end
 
-  def average_items_price_standard_deviation
-    standard_deviation(all_item_prices, average_average_price_per_merchant)
-  end
-
-  def merchants_with_high_item_count
-    average_items = average_items_per_merchant
-    standard_deviation = average_items_per_merchant_standard_deviation
-    merchants.collect do |merchant|
-      average_difference = (merchant.items.length - average_items)
-      merchant if average_difference > standard_deviation
-    end.compact
+  def total_invoices_for_merchants
+    merchants.map do |merchant|
+      sales_engine.merchants.find_by_id(merchant.id).invoices.length
+    end
   end
 
   def average_item_price_for_merchant(id)
@@ -68,40 +91,6 @@ class SalesAnalyst
     average(result, merchants.length)
   end
 
-  def found_max_price
-    @sales_engine.items.all.map(&:unit_price).max.to_i
-  end
-
-  def prices_list
-    @sales_engine.items.all.map(&:unit_price)
-  end
-
-  def standard_deviation_of_item_price
-    standard_deviation(prices_list, average_average_price_per_merchant)
-  end
-
-  def golden_items
-    item_price_deviation = standard_deviation_of_item_price
-    item_price = average_average_price_per_merchant + (2 * item_price_deviation)
-    price_range = item_price.to_i..found_max_price
-    @sales_engine.items.find_all_by_price_in_range(price_range)
-  end
-
-  def total_invoices_for_merchants
-    merchants.map do |merchant|
-      @sales_engine.merchants.find_by_id(merchant.id).invoices.length
-    end
-  end
-
-  def average_invoices_per_merchant
-    average(invoices.length, merchants.length).to_f
-  end
-
-  def average_invoices_per_merchant_standard_deviation
-    invoice_list = total_invoices_for_merchants
-    standard_deviation(invoice_list, average_invoices_per_merchant).round(2)
-  end
-
   def invoice_status(status)
     matching_invoices = invoices.find_all do |invoice|
       invoice.attributes[:status] == status
@@ -109,14 +98,26 @@ class SalesAnalyst
     ((matching_invoices.length.to_f / invoices.length) * 100).round(2)
   end
 
-  def standard_deviation_of_invoice_count
-    standard_deviation(total_invoices_for_merchants, average_average_invoices_per_merchant)
+  def golden_items
+    item_price_deviation = standard_deviation_of_item_price
+    item_price = average_average_price_per_merchant + (2 * item_price_deviation)
+    price_range = item_price.to_i..found_max_price
+    sales_engine.items.find_all_by_price_in_range(price_range)
+  end
+
+  def merchants_with_high_item_count
+    average_items = average_items_per_merchant
+    standard_deviation = average_items_per_merchant_standard_deviation
+    merchants.collect do |merchant|
+      average_difference = (merchant.items.length - average_items)
+      merchant if average_difference > standard_deviation
+    end.compact
   end
 
   def top_merchants_by_invoice_count
-    std_dev = average_invoices_per_merchant_standard_deviation
-    average = average_invoices_per_merchant
-    bottom_range = (std_dev * 2) + average
+    invoices_deviation = average_invoices_per_merchant_standard_deviation
+    average_invoices = average_invoices_per_merchant
+    bottom_range = (invoices_deviation * 2) + average_invoices
     sales_engine.merchants.all.map do |merchant|
       amount = sales_engine.merchants.find_by_id(merchant.id).invoices.length
       merchant if amount > bottom_range
@@ -124,12 +125,39 @@ class SalesAnalyst
   end
 
   def bottom_merchants_by_invoice_count
-    std_dev = average_invoices_per_merchant_standard_deviation
-    average = average_invoices_per_merchant
-    bottom_of_range = average - (std_dev * 2)
-    @sales_engine.merchants.all.map do |merchant|
-      amount = @sales_engine.merchants.find_by_id(merchant.id).invoices.length
-      merchant if amount < bottom_of_range
+    invoices_deviation = average_invoices_per_merchant_standard_deviation
+    average_invoices = average_invoices_per_merchant
+    bottom_range = average_invoices - (invoices_deviation * 2)
+    sales_engine.merchants.all.map do |merchant|
+      amount = sales_engine.merchants.find_by_id(merchant.id).invoices.length
+      merchant if amount < bottom_range
     end.compact
+  end
+
+  def day_count_hash
+    days = @sales_engine.invoices.all.map { |invoice| invoice.created_at.wday }
+    group = days.group_by { |day| day }
+    group.each { |key, value| group[key] = value.length }
+  end
+
+  def standard_deviation_of_invoices_by_weekday
+    average = day_count_hash.values.inject(:+) / 7
+    total_invoices_by_day = day_count_hash.values
+    squared_num_invoice = total_invoices_by_day.map { |day| (day - average)**2 }
+    value = squared_num_invoice.inject(:+) / (total_invoices_by_day.length - 1)
+    Math.sqrt(value)
+  end
+
+  def find_top_days
+    average = day_count_hash.values.inject(:+) / 7
+    std_dev = standard_deviation_of_invoices_by_weekday
+    amount = std_dev + average
+    day_count_hash.select do |_, value|
+      value > amount
+    end
+  end
+
+  def top_days_by_invoice_count
+    find_top_days.keys.map { |day| Date::DAYNAMES[day] }
   end
 end
