@@ -1,4 +1,4 @@
-require_relative 'math_wizard'
+require_relative '../modules/math_wizard'
 # :nodoc:
 class SalesAnalyst
   include MathWizard

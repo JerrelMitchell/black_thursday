@@ -1,5 +1,5 @@
-require_relative 'file_loader'
-require_relative 'repository'
+require_relative '../modules/repository'
+require_relative '../modules/file_loader'
 require_relative 'invoice_item'
 
 # :nodoc:
@@ -10,11 +10,9 @@ class InvoiceItemRepository
   def initialize(filepath, parent)
     @invoice_items = []
     @parent = parent
-    @unchangeable_keys = %I[id invoice_item_id created_at]
+    @unchangeable_keys = %I[id invoice_id created_at]
     load_attributes(filepath, @invoice_items, InvoiceItem)
   end
-
-  #refactor and update methods and add tests
 
   def all
     @invoice_items
@@ -24,28 +22,12 @@ class InvoiceItemRepository
     find_with_id(@invoice_items, id)
   end
 
-  def find_by_name(name)
-    find_by_instance_string(@invoice_items, name, :name)
+  def find_all_by_item_id(id)
+    find_all_with_instance_key(@invoice_items, id, :item_id)
   end
 
-  def find_all_with_description(description)
-    find_all_with_instance_string(@invoice_items, description, :description)
-  end
-
-  def find_all_by_price(price)
-    find_all_with_instance_key(@invoice_items, price, :unit_price)
-  end
-
-  def find_all_by_price_in_range(price_range)
-    find_all_instances_in_price_range(@invoice_items, price_range)
-  end
-
-  def find_all_by_merchant_id(merchant_id)
-    find_all_with_instance_key(@invoice_items, merchant_id, :merchant_id)
-  end
-
-  def delete(id)
-    delete_instance(@invoice_items, id)
+  def find_all_by_invoice_id(id)
+    find_all_with_instance_key(@invoice_items, id, :invoice_id)
   end
 
   def create(attributes)
@@ -54,6 +36,10 @@ class InvoiceItemRepository
 
   def update(id, attributes)
     update_instance(id, attributes, @invoice_items, @unchangeable_keys)
+  end
+
+  def delete(id)
+    delete_instance(@invoice_items, id)
   end
 
   def inspect
