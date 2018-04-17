@@ -8,7 +8,12 @@ require_relative 'customer_repository'
 
 # :nodoc:
 class SalesEngine
-  attr_reader :items, :merchants, :invoices
+  attr_reader :items,
+              :merchants,
+              :invoices,
+              :invoice_items,
+              :transactions,
+              :customers
 
   def initialize(files)
     @items         = ItemRepository.new(files[:items], self)
