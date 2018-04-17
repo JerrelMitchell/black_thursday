@@ -126,4 +126,45 @@ class SalesAnalyst
       merchant if amount < bottom_of_range
     end.compact
   end
+
+  def days_count
+    days = invoices.map do |invoice|
+      invoice.created_at.wday
+    end
+    grouped = days.group_by do |day|
+      day
+    end
+    grouped.each do |key, value|
+      grouped[key] = value.length
+      #binding.pry
+    end
+  end
+
+  def standard_deviation_of_invoices_by_wday
+    average = days_count.values.reduce(:+) / 7
+    total_by_day = days_count.values
+    squared = total_by_day.map do |day|
+      (day - average) ** 2
+    end
+    #binding.pry
+    value = squared.reduce(:+) / (total_by_day.length - 1)
+    Math.sqrt(value).round(2)
+  end
+
+  def days_sales
+    average = days_count.values.reduce(:+) / 7
+    standard_deviation = standard_deviation_of_invoices_by_wday
+    amount = standard_deviation + average
+    days_count.select do |amount, value|
+      value > amount
+      binding.pry
+    end
+  end
+
+  def top_days_by_invoice_count
+    days_sales.keys.map do |day|
+      Date::DAYNAMES[day]
+    end
+  end
+
 end
