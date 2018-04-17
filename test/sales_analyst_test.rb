@@ -87,15 +87,27 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 59.5, result2
   end
 
-  def test_it_can_count_sales_per_day
-    assert_instance_of Hash, sales_analyst.days_count
+  def test_it_can_group_number_of_invoices_by_each_day_of_the_week
+    result = sales_analyst.group_invoices_by_weekday
+    assert_equal Hash, result.class
+    assert_equal 7, result.size
+    assert_equal ({ 6 => 30,
+                    5 => 35,
+                    3 => 20,
+                    1 => 26,
+                    0 => 33,
+                    2 => 33,
+                    4 => 23 }), result
   end
 
-  def test_it_can_find_standard_deviation_by_weekday
-    assert_equal 5.66, sales_analyst.standard_deviation_of_invoices_by_wday
+  def test_it_can_find_standard_deviation_for_invoices_by_weekday
+    result = sales_analyst.standard_deviation_of_invoices_by_weekday
+    assert_equal 5.66, result
   end
 
-  def test_it_can_return_top_weekday
-    assert_equal ["Saturday"], sales_analyst.top_days_by_invoice_count
+  def test_it_can_return_top_invoicing_days
+    result = sales_analyst.top_days_by_invoice_count
+    assert_equal 1, result.size
+    assert_equal ['Friday'], result
   end
 end
