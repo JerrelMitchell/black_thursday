@@ -47,6 +47,6 @@ class InvoiceRepository
   end
 
   def inspect
-    "#<#{self.class} #{@invoices.size} rows>"
+    inspect_instance(self, @invoices)
   end
 end

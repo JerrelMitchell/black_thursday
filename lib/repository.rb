@@ -1,5 +1,9 @@
 # :nodoc:
 module Repository
+  def inspect_instance(parent, instances)
+    "#<#{parent.class} #{instances.size} rows>"
+  end
+
   def find_with_id(instances, id)
     instances.find do |instance|
       instance.attributes[:id] == id
