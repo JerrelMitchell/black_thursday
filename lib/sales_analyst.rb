@@ -157,18 +157,18 @@ class SalesAnalyst
     Math.sqrt(value).round(2)
   end
 
-  def find_top_days
+  def days_sales
     average = days_count.values.reduce(:+) / 7
     standard_deviation = standard_deviation_of_invoices_by_wday
     amount = standard_deviation + average
     days_count.select do |amount, value|
       value > amount
-      #binding.pry
+      binding.pry
     end
   end
 
   def top_days_by_invoice_count
-    find_top_days.keys.map do |day|
+    days_sales.keys.map do |day|
       Date::DAYNAMES[day]
     end
   end
