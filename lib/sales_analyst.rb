@@ -1,5 +1,4 @@
 require_relative 'math_wizard'
-
 # :nodoc:
 class SalesAnalyst
   include MathWizard
@@ -7,23 +6,19 @@ class SalesAnalyst
   def initialize(sales_engine)
     @sales_engine = sales_engine
   end
-
   def merchants
     sales_engine.merchants.all
   end
-
   def items
     sales_engine.items.all
   end
-
   def invoices
     sales_engine.invoices.all
   end
-
   def all_item_prices
     items.map(&:unit_price)
   end
-
+  
   def found_max_price
     sales_engine.items.all.map(&:unit_price).max.to_i
   end
@@ -148,16 +143,23 @@ class SalesAnalyst
     Math.sqrt(value)
   end
 
-  def find_top_days
-    average = day_count_hash.values.inject(:+) / 7
-    std_dev = standard_deviation_of_invoices_by_weekday
-    amount = std_dev + average
-    day_count_hash.select do |_, value|
+  def days_sales
+    average = days_count.values.reduce(:+) / 7
+    standard_deviation = standard_deviation_of_invoices_by_wday
+    amount = standard_deviation + average
+    days_count.select do |amount, value|
       value > amount
+      binding.pry
     end
   end
 
   def top_days_by_invoice_count
-    find_top_days.keys.map { |day| Date::DAYNAMES[day] }
+    top_days = days_sales.max_by do |value|
+      value
+    end
+    top_days.map do |day|
+      Date::DAYNAMES[day]
+    end.compact
   end
+
 end
