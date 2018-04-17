@@ -1,4 +1,4 @@
-require_relative 'math_wizard'
+require_relative '../modules/math_wizard'
 # :nodoc:
 class SalesAnalyst
   include MathWizard
@@ -6,19 +6,23 @@ class SalesAnalyst
   def initialize(sales_engine)
     @sales_engine = sales_engine
   end
+
   def merchants
     sales_engine.merchants.all
   end
+
   def items
     sales_engine.items.all
   end
+
   def invoices
     sales_engine.invoices.all
   end
+
   def all_item_prices
     items.map(&:unit_price)
   end
-  
+
   def found_max_price
     sales_engine.items.all.map(&:unit_price).max.to_i
   end
@@ -70,6 +74,10 @@ class SalesAnalyst
     merchants.map do |merchant|
       sales_engine.merchants.find_by_id(merchant.id).invoices.length
     end
+  end
+
+  def top_days_by_invoice_count
+    find_top_days.keys.map { |day| Date::DAYNAMES[day] }
   end
 
   def average_item_price_for_merchant(id)
@@ -129,37 +137,26 @@ class SalesAnalyst
     end.compact
   end
 
-  def day_count_hash
+  def group_invoices_by_weekday
     days = @sales_engine.invoices.all.map { |invoice| invoice.created_at.wday }
     group = days.group_by { |day| day }
     group.each { |key, value| group[key] = value.length }
   end
 
+  def find_top_days
+    average = group_invoices_by_weekday.values.inject(:+) / 7
+    std_dev = standard_deviation_of_invoices_by_weekday
+    amount = std_dev + average
+    group_invoices_by_weekday.reject do |_, value|
+      value < amount
+    end
+  end
+
   def standard_deviation_of_invoices_by_weekday
-    average = day_count_hash.values.inject(:+) / 7
-    total_invoices_by_day = day_count_hash.values
+    average = group_invoices_by_weekday.values.inject(:+) / 7
+    total_invoices_by_day = group_invoices_by_weekday.values
     squared_num_invoice = total_invoices_by_day.map { |day| (day - average)**2 }
     value = squared_num_invoice.inject(:+) / (total_invoices_by_day.length - 1)
-    Math.sqrt(value)
+    Math.sqrt(value).round(2)
   end
-
-  def days_sales
-    average = days_count.values.reduce(:+) / 7
-    standard_deviation = standard_deviation_of_invoices_by_wday
-    amount = standard_deviation + average
-    days_count.select do |amount, value|
-      value > amount
-      binding.pry
-    end
-  end
-
-  def top_days_by_invoice_count
-    top_days = days_sales.max_by do |value|
-      value
-    end
-    top_days.map do |day|
-      Date::DAYNAMES[day]
-    end.compact
-  end
-
 end

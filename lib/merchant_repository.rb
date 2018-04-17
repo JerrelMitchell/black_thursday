@@ -1,5 +1,5 @@
-require_relative 'file_loader'
-require_relative 'repository'
+require_relative '../modules/repository'
+require_relative '../modules/file_loader'
 require_relative 'merchant'
 
 # robocomment
