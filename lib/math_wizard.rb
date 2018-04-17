@@ -1,8 +1,7 @@
 # :nodoc:
 module MathWizard
   def average(numerator, denominator)
-    (BigDecimal(numerator, 4) / BigDecimal(denominator, 4)).round(2)
-    # take out 4? BigDecimal should default to the correct amount of decimal points
+    (BigDecimal(numerator) / BigDecimal(denominator)).round(2)
   end
 
   def standard_deviation(data, average)

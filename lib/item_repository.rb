@@ -55,6 +55,6 @@ class ItemRepository
   end
 
   def inspect
-    "#<#{self.class} #{@items.size} rows>"
+    inspect_instance(self, @items)
   end
 end
