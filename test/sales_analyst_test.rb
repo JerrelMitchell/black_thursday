@@ -121,4 +121,8 @@ class SalesAnalystTest < Minitest::Test
       result_2 = sales_analyst.invoice_paid_in_full?(1441)
       refute result_2
   end
+
+  def test_it_can_find_invoice_total_by_invoice_id
+  
+  end
 end

@@ -58,4 +58,8 @@ class SalesEngine
   def collect_transactions_by_invoice_id(id)
     transactions.find_all_by_invoice_id(id)
   end
+
+  def collect_prices_by_invoice_id(id)
+    invoice_items.find_all_by_invoice_id(id)
+  end 
 end
