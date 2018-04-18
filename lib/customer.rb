@@ -1,5 +1,5 @@
 class Customer
-  attr_reader :attributes
+  attr_reader :attributes, :parent
   def initialize(customer, parent)
     @attributes = ({
       :id => customer[:id].to_i,
@@ -8,6 +8,7 @@ class Customer
       :created_at => Time.parse(customer[:created_at]),
       :updated_at => Time.parse(customer[:updated_at])
     })
+    @parent = parent
   end
 
   def id

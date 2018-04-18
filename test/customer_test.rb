@@ -10,7 +10,7 @@ class CustomerTest < Minitest::Test
       :last_name => 'Clarke',
       :created_at => '2017-12-15 17:42:32 UTC',
       :updated_at => '2017-12-15 17:42:32 UTC'
-    })
+    }, 'parent')
   end
 
   def test_it_exists
