@@ -28,7 +28,7 @@ class SalesEngineTest < Minitest::Test
     assert_equal '510+ RealPush Icon Set', engine.items.all.first.name
     assert_equal 'Shopin1901', engine.merchants.all.first.name
     assert_equal :pending, engine.invoices.all.first.status
-    assert_equal 'success', engine.transactions.all.first.result
+    assert_equal :success, engine.transactions.all.first.result
     assert_equal 5, engine.invoice_items.all.first.quantity
     # assert_equal '', engine.customers.all.first.first_name
   end
