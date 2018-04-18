@@ -21,7 +21,7 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of InvoiceRepository, engine.invoices
     assert_instance_of InvoiceItemRepository, engine.invoice_items
     assert_instance_of TransactionRepository, engine.transactions
-    # assert_instance_of CustomerRepository, engine.customers
+    assert_instance_of CustomerRepository, engine.customers
   end
 
   def test_it_has_attributes
@@ -30,6 +30,6 @@ class SalesEngineTest < Minitest::Test
     assert_equal :pending, engine.invoices.all.first.status
     assert_equal :success, engine.transactions.all.first.result
     assert_equal 5, engine.invoice_items.all.first.quantity
-    # assert_equal '', engine.customers.all.first.first_name
+    assert_equal 'Joey', engine.customers.all.first.first_name
   end
 end
