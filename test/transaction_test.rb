@@ -22,11 +22,11 @@ class TransactionTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    assert_equal 5, transaction.id
-    assert_equal 2179, transaction.invoice_id
-    assert_equal 'success', transaction.result
-    assert_equal 404803345106737, transaction.credit_card_number
-    assert_equal 313, transaction.credit_card_expiration_date
+    assert_equal 5,                 transaction.id
+    assert_equal 2179,              transaction.invoice_id
+    assert_equal :success,          transaction.result
+    assert_equal '404803345106737', transaction.credit_card_number
+    assert_equal '0313',            transaction.credit_card_expiration_date
   end
 
   def test_it_can_show_times_when_created_and_updated

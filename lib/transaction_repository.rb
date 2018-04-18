@@ -33,7 +33,7 @@ class TransactionRepository
   end
 
   def find_all_by_result(result)
-    find_all_with_instance_string(@transactions, result, :result)
+    find_all_with_instance_key(@transactions, result, :result)
   end
 
   def delete(id)
