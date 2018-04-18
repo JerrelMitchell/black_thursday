@@ -43,4 +43,4 @@ class CustomerTest < Minitest::Test
 #     assert_equal expected_created_date, customer.created_at
 #     assert_equal expected_updated_date, customer.updated_at
 #   end
-# end
+ end
