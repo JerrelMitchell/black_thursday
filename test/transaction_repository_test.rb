@@ -45,11 +45,11 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_transactions_that_share_credit_card_number
-    result1 = transaction_repo.find_all_by_credit_card_number(4005021410252154)
+    result1 = transaction_repo.find_all_by_credit_card_number('4005021410252154')
     assert_equal Transaction, result1.first.class
     assert_equal 4,           result1.size
 
-    result2 = transaction_repo.find_all_by_credit_card_number(4391575588388370)
+    result2 = transaction_repo.find_all_by_credit_card_number('4391575588388370')
     assert_equal Transaction, result2.last.class
     assert_equal 3,           result2.size
 
@@ -58,11 +58,11 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_transactions_that_share_a_result
-    result1 = transaction_repo.find_all_by_result('success')
+    result1 = transaction_repo.find_all_by_result(:success)
     assert_equal Transaction, result1.first.class
     assert_equal 77,          result1.size
 
-    result2 = transaction_repo.find_all_by_result('failed')
+    result2 = transaction_repo.find_all_by_result(:failed)
     assert_equal Transaction, result2.last.class
     assert_equal 23,          result2.size
 
@@ -83,31 +83,31 @@ class TransactionRepositoryTest < Minitest::Test
     assert_nil transaction_repo.find_by_id(101)
 
     transaction_repo.create(invoice_id: 808,
-                            result: 'success',
-                            credit_card_number: 1234567890,
-                            credit_card_expiration_date: 1234)
+                            result: :success,
+                            credit_card_number: '1234567890',
+                            credit_card_expiration_date: '1234')
 
     result1 = transaction_repo.find_by_id(101)
     assert_equal 101,           result1.id
-    assert_equal 'success',     result1.result
-    assert_equal 1234567890,    result1.credit_card_number
+    assert_equal :success,      result1.result
+    assert_equal '1234567890',  result1.credit_card_number
     assert_equal Time.now.to_s, result1.created_at.to_s
   end
 
   def test_it_can_update_an_existing_transaction_instance
     result1 = transaction_repo.find_by_id(9)
-    assert_equal 4463525332822998, result1.credit_card_number
-    assert_equal 618,              result1.credit_card_expiration_date
-    assert_equal 'failed',         result1.result
+    assert_equal '4463525332822998', result1.credit_card_number
+    assert_equal '0618',             result1.credit_card_expiration_date
+    assert_equal :failed,            result1.result
 
-    transaction_repo.update(9, result: 'success',
-                               credit_card_number: 1234567890,
-                               credit_card_expiration_date: 1234)
+    transaction_repo.update(9, result: :success,
+                               credit_card_number: '1234567890',
+                               credit_card_expiration_date: '1234')
 
     result2 = transaction_repo.find_by_id(9)
-    assert_equal 1234567890,    result2.credit_card_number
-    assert_equal 1234,          result2.credit_card_expiration_date
-    assert_equal 'success',     result2.result
+    assert_equal '1234567890',  result2.credit_card_number
+    assert_equal '1234',        result2.credit_card_expiration_date
+    assert_equal :success,      result2.result
     assert_equal Time.now.to_s, result2.updated_at.to_s
   end
 
