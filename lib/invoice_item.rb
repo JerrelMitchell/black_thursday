@@ -18,8 +18,6 @@ class InvoiceItem
     @parent = parent
   end
 
-  #add tests
-
   def id
     attributes[:id]
   end

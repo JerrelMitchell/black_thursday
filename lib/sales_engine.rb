@@ -8,24 +8,35 @@ require_relative 'customer_repository'
 
 # :nodoc:
 class SalesEngine
-  attr_reader :items,
-              :merchants,
-              :invoices,
-              :invoice_items,
-              :transactions,
-              :customers
+  attr_reader :files
 
   def initialize(files)
-    @items         = ItemRepository.new(files[:items], self)
-    @merchants     = MerchantRepository.new(files[:merchants], self)
-    @invoices      = InvoiceRepository.new(files[:invoices], self)
-    @invoice_items = InvoiceItemRepository.new(files[:invoice_items], self)
-    @transactions  = TransactionRepository.new(files[:transactions], self)
-    @customers     = CustomerRepository.new(files[:customers], self)
-
+    @files = files
   end
 
-  #update tests
+  def items
+    @items = ItemRepository.new(files[:items], self)
+  end
+
+  def merchants
+    @merchants = MerchantRepository.new(files[:merchants], self)
+  end
+
+  def invoices
+    @invoices = InvoiceRepository.new(files[:invoices], self)
+  end
+
+  def invoice_items
+    @invoice_items = InvoiceItemRepository.new(files[:invoice_items], self)
+  end
+
+  def transactions
+    @transactions  = TransactionRepository.new(files[:transactions], self)
+  end
+
+  def customers
+    @customers     = CustomerRepository.new(files[:customers], self)
+  end
 
   def self.from_csv(files)
     new(files)

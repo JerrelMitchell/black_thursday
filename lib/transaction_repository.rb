@@ -14,8 +14,6 @@ class TransactionRepository
     load_attributes(filepath, @transactions, Transaction)
   end
 
-  #refactor and update methods and add tests
-
   def all
     @transactions
   end
