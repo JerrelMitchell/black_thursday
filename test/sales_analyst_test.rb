@@ -114,27 +114,27 @@ class SalesAnalystTest < Minitest::Test
     assert_equal ['Friday'], result
   end
 
-  # def test_it_can_tell_if_invoice_is_paid_in_full
-  #   invoice_1 = Invoice.new({
-  #     id:           '4',
-  #     customer_id:  '6',
-  #     merchant_id:  '2',
-  #     status:       'paid in full',
-  #     created_at:   '2018-09-04',
-  #     updated_at:   '2018-09-04'
-  #   }, 'parent')
-  #
-  #   assert sales_analyst.invoice_paid_in_full?('4')
-  #
-  #   invoice_2 = Invoice.new({
-  #     id:            '7',
-  #     customer_id:   '5',
-  #     merchant_id:   '2',
-  #     status:        'pending',
-  #     created_at:   '2018-09-04',
-  #     updated_at:   '2018-09-04'
-  #     }, 'parent')
-  #
-  #     refute sales_analyst.invoice_paid_in_full?('7')
-  # end
+  def test_it_can_tell_if_invoice_is_paid_in_full
+    invoice_1 = Invoice.new({
+      id:           9,
+      customer_id:  '6',
+      merchant_id:  '2',
+      status:       'paid in full',
+      created_at:   '2018-09-04',
+      updated_at:   '2018-09-04'
+    }, 'parent')
+
+    assert sales_analyst.invoice_paid_in_full?('4')
+
+    invoice_2 = Invoice.new({
+      id:            '7',
+      customer_id:   '5',
+      merchant_id:   '2',
+      status:        'pending',
+      created_at:   '2018-09-04',
+      updated_at:   '2018-09-04'
+      }, 'parent')
+
+      refute sales_analyst.invoice_paid_in_full?('7')
+  end
 end
