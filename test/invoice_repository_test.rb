@@ -90,6 +90,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
     result3 = invoice_repo.find_by_id(5)
     assert_equal :returned, result3.status
+    assert_equal Time.now.to_s, result3.updated_at.to_s
   end
 
   def test_can_create_new_invoice_instance_with_given_attributes

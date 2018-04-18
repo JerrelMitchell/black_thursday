@@ -1,4 +1,6 @@
 require 'time'
+
+# Stores instance attributes generated from SalesEngine.
 class Transaction
   attr_reader :attributes, :parent
 

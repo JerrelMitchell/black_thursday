@@ -54,7 +54,9 @@ module Repository
 
   def assign_if_key_exists(attributes)
     if attributes.keys.any? do |key|
-      ((key == :description || key == :merchant_id) || key == :result)
+      ((key == :unit_price || key == :merchant_id) ||
+      (key  == :quantity   || key == :result)) ||
+      (key  == :first_name)
     end
       attributes[:created_at] = Time.now.to_s
       attributes[:updated_at] = Time.now.to_s

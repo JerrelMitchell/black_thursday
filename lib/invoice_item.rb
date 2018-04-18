@@ -1,7 +1,7 @@
 require 'bigdecimal'
 require 'time'
 
-# :nodoc:
+# # Stores instance attributes generated from SalesEngine.
 class InvoiceItem
   attr_reader :attributes, :parent
 
@@ -44,5 +44,9 @@ class InvoiceItem
 
   def updated_at
     attributes[:updated_at]
+  end
+
+  def unit_price_to_dollars
+    attributes[:unit_price].to_f.round(2)
   end
 end
