@@ -6,7 +6,7 @@ class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repo
   def setup
     engine = SalesEngine.from_csv(
-      items:     './fixtures/fixture_items.csv'
+      items: './fixtures/fixture_items.csv'
     )
     @item_repo = engine.items
   end
