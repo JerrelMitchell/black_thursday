@@ -115,26 +115,10 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_can_tell_if_invoice_is_paid_in_full
-    invoice_1 = Invoice.new({
-      id:           9,
-      customer_id:  '6',
-      merchant_id:  '2',
-      status:       'paid in full',
-      created_at:   '2018-09-04',
-      updated_at:   '2018-09-04'
-    }, 'parent')
+      result_1 = sales_analyst.invoice_paid_in_full?(46)
+      assert result_1
 
-    assert sales_analyst.invoice_paid_in_full?(9)
-
-    invoice_2 = Invoice.new({
-      id:            '7',
-      customer_id:   '5',
-      merchant_id:   '2',
-      status:        'pending',
-      created_at:   '2018-09-04',
-      updated_at:   '2018-09-04'
-      }, 'parent')
-
-      refute sales_analyst.invoice_paid_in_full?('7')
+      result_2 = sales_analyst.invoice_paid_in_full?(1441)
+      refute result_2
   end
 end
