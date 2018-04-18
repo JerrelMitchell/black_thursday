@@ -124,7 +124,7 @@ class SalesAnalystTest < Minitest::Test
       updated_at:   '2018-09-04'
     }, 'parent')
 
-    assert sales_analyst.invoice_paid_in_full?('4')
+    assert sales_analyst.invoice_paid_in_full?(9)
 
     invoice_2 = Invoice.new({
       id:            '7',
