@@ -34,9 +34,23 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_customers_that_share_first_name
+    result1 = @customer_repo.find_all_by_first_name('Felipe')
+    assert_equal Customer, result1.first.class
+    assert_equal 3,        result1.size
+    assert_equal 'Felipe', result1.first.first_name
+    assert_equal 'Felipe', result1.last.first_name
+    assert_equal 'Luettgen', result1.first.last_name
+    assert_equal 'Wilkinson', result1.last.last_name
   end
 
   def test_it_can_find_all_customers_that_share_last_name
+    result2 = @customer_repo.find_all_by_last_name('Ross')
+    assert_equal Customer, result2.first.class
+    assert_equal 4,        result2.size
+    assert_equal 'Leanne', result2.first.first_name
+    assert_equal 'Maryam', result2.last.first_name
+    assert_equal 'Ross', result2.first.last_name
+    assert_equal 'Ross', result2.last.last_name
   end
 
   def test_it_can_delete_customer_instance_by_id
