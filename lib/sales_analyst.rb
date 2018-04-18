@@ -168,5 +168,4 @@ class SalesAnalyst
       true
     end
   end
-
 end

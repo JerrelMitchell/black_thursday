@@ -31,11 +31,11 @@ class SalesEngine
   end
 
   def transactions
-    @transactions  = TransactionRepository.new(files[:transactions], self)
+    @transactions = TransactionRepository.new(files[:transactions], self)
   end
 
   def customers
-    @customers     = CustomerRepository.new(files[:customers], self)
+    @customers = CustomerRepository.new(files[:customers], self)
   end
 
   def self.from_csv(files)
