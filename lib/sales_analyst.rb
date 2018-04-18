@@ -159,4 +159,13 @@ class SalesAnalyst
     value = squared_num_invoice.inject(:+) / (total_invoices_by_day.length - 1)
     Math.sqrt(value).round(2)
   end
+
+  def invoice_paid_in_full?(invoice_id)
+    binding.pry
+    current_invoice = invoices.find_by_id(invoice_id)
+    if current_invoice.attributes[:status] == 'paid in full'
+      true
+    end
+  end
+
 end
