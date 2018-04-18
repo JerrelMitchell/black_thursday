@@ -8,9 +8,9 @@ class Transaction
     @attributes = {
       id:                 action[:id].to_i,
       invoice_id:         action[:invoice_id].to_i,
-      result:             action[:result],
-      credit_card_number: action[:credit_card_number].to_i,
-      credit_card_expiration_date: action[:credit_card_expiration_date].to_i,
+      result:             action[:result].to_sym,
+      credit_card_number: action[:credit_card_number],
+      credit_card_expiration_date: action[:credit_card_expiration_date],
       created_at:         Time.parse(action[:created_at]),
       updated_at:         Time.parse(action[:updated_at])
     }
