@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'time'
+
 # :nodoc:
 class InvoiceItem
   attr_reader :attributes, :parent

@@ -1,3 +1,4 @@
+require 'time'
 class Transaction
   attr_reader :attributes, :parent
 
