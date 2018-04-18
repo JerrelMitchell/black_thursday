@@ -22,27 +22,39 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_by_first_name
-    assert_equal 1, @customer_repo.find_all_by_first_name('Sylvester')
+    found_1 = []
+    found_1 << @customer_repo.find_all_by_first_name('Sylvester')
+    assert_equal 1, found_1.count
 
-    assert_equal 1, @customer_repo.find_all_by_first_name('Will')
+    found_2 = []
+    found_2 << @customer_repo.find_all_by_first_name('Will')
+    assert_equal 1, found_2.count
   end
 
   def test_it_can_find_all_by_last_name
-    assert_equal 1, @customer_repo.find_all_by_last_name('Armstrong')
+    found_1 = []
+    found_1 << @customer_repo.find_all_by_last_name('Ortiz')
+    assert_equal 1, found_1.count
 
-    assert_equal 1, @customer_repo.find_all_by_last_name('Ortiz')
+    found_2 = []
+    found_2 << @customer_repo.find_all_by_last_name('Toy')
+    assert_equal 1, found_2.count
   end
 
   def test_find_all_by_first_or_last_name_are_case_insensitive
-    assert_equal 1, @customer_repo.find_all_by_first_name('sylvester')
+    found_1 = []
+    found_1 << @customer_repo.find_all_by_last_name('ortiz')
+    assert_equal 1, found_1.count
 
-    assert_equal 1, @customer_repo.find_all_by_last_name('ortiz')
+    found_2 = []
+    found_2 << @customer_repo.find_all_by_first_name('will')
+    assert_equal 1, found_2.count
   end
 
   def test_it_can_create_a_new_customer_with_given_attributes
     assert_nil @customer_repo.find_by_id(201)
 
-    @customer_repo.create({id: '201', first_name: 'Bob', last_name: 'Ross', created_at: '2018-05-05 UPC', updated_at: '2018-05-06 UPC')
+    @customer_repo.create({id: '201', first_name: 'Bob', last_name: 'Ross', created_at: '2018-05-05 UPC', updated_at: '2018-05-06 UPC'})
     result = @customer_repo.find_by_id(201)
     assert_equal 201, result.id
     assert_equal 'Bob', result.first_name
