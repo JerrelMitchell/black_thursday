@@ -1,7 +1,7 @@
 require 'bigdecimal'
 require 'time'
 
-# :nodoc:
+# Stores instance attributes generated from SalesEngine.
 class Item
   attr_reader :attributes, :parent
 

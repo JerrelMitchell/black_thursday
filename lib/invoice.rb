@@ -1,5 +1,6 @@
 require 'time'
-# :nodoc:
+
+# Stores instance attributes generated from SalesEngine.
 class Invoice
   attr_reader :attributes, :parent
 

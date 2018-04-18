@@ -1,5 +1,6 @@
 require 'time'
 
+# Stores instance attributes generated from SalesEngine.
 class Customer
   attr_reader :attributes, :parent
   def initialize(customer, parent)

@@ -1,4 +1,4 @@
-# :nodoc:
+# Stores instance attributes generated from SalesEngine.
 class Merchant
   attr_reader :attributes, :parent
   def initialize(merchant, parent)

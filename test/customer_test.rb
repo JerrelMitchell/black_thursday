@@ -1,6 +1,7 @@
 require './test/test_helper'
 require_relative '../lib/customer'
 
+# :nodoc:
 class CustomerTest < Minitest::Test
   def setup
     @customer = Customer.new({

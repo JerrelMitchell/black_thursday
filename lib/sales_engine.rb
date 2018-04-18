@@ -6,7 +6,8 @@ require_relative 'invoice_item_repository'
 require_relative 'transaction_repository'
 require_relative 'customer_repository'
 
-# :nodoc:
+# Handles reading files for Repository classes for all similarly named instance
+# classes, also collects instances for Analyst to use.
 class SalesEngine
   attr_reader :files
 
