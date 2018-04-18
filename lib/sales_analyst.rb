@@ -160,9 +160,10 @@ class SalesAnalyst
     Math.sqrt(value).round(2)
   end
 
+  # sales analyst doesn't (and shouldn't) know about invoices_repository
+  # so we'll need to call find_by_id another way
   def invoice_paid_in_full?(invoice_id)
-    binding.pry
-    current_invoice = invoices.find_by_id(invoice_id)
+    current_invoice = invoices_repository.find_by_id(invoice_id)
     if current_invoice.attributes[:status] == 'paid in full'
       true
     end

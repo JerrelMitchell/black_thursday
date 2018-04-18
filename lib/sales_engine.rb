@@ -32,6 +32,7 @@ class SalesEngine
 
   def transactions
     @transactions  = TransactionRepository.new(files[:transactions], self)
+  end
 
   def customers
     @customers     = CustomerRepository.new(files[:customers], self)

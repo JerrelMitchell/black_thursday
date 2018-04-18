@@ -6,7 +6,7 @@ class InvoiceRepositoryTest < Minitest::Test
   attr_reader :invoice_repo
   def setup
     engine = SalesEngine.from_csv(
-      invoices: './fixtures/fixture_invoices.csv'
+      invoices:  './fixtures/fixture_invoices.csv'
     )
     @invoice_repo = engine.invoices
   end
