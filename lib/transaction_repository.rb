@@ -51,4 +51,5 @@ class TransactionRepository
   def inspect
     inspect_instance(self, @transactions)
   end
+
 end
