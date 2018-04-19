@@ -1,6 +1,6 @@
 # Stores instance attributes generated from SalesEngine.
 class Merchant
-  attr_reader :attributes
+  attr_reader :attributes, :parent
   def initialize(merchant, parent)
     @attributes = {
       id:    merchant[:id].to_i,
@@ -18,10 +18,10 @@ class Merchant
   end
 
   def items
-    @parent.collect_id_for_items(id)
+    parent.collect_id_for_items(id)
   end
 
   def invoices
-    @parent.collect_id_for_invoices(id)
+    parent.collect_id_for_invoices(id)
   end
 end
