@@ -166,7 +166,7 @@ class SalesAnalyst
   def invoice_paid_in_full?(invoice_id)
     transactions = sales_engine.collect_transactions_by_invoice_id(invoice_id)
     transactions.any? do |transaction|
-      transaction.result == 'success'
+      transaction.result == :success
     end
   end
 end

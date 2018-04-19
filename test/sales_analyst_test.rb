@@ -115,7 +115,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_can_tell_if_invoice_is_paid_in_full
-    skip
     result_1 = sales_analyst.invoice_paid_in_full?(46)
     assert result_1
 
