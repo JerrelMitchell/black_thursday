@@ -8,44 +8,44 @@ require_relative 'merchant'
 class MerchantRepository
   include FileLoader
   include Repository
-  attr_reader :merchants, :parent
+  attr_reader :repository, :parent
   def initialize(filepath, parent)
-    @merchants         = []
+    @repository         = []
     @parent            = parent
     @unchangeable_keys = %I[id]
-    load_attributes(filepath, @merchants, Merchant)
+    load_attributes(filepath, @repository, Merchant)
   end
 
   def all
-    @merchants
+    @repository
   end
 
   def find_by_id(id)
-    find_with_id(@merchants, id)
+    find_with_id(@repository, id)
   end
 
   def find_by_name(name)
-    find_by_instance_string(@merchants, name, :name)
+    find_by_instance_string(@repository, name, :name)
   end
 
   def delete(id)
-    delete_instance(@merchants, id)
+    delete_instance(@repository, id)
   end
 
   def find_all_by_name(name)
-    find_all_with_instance_string(@merchants, name, :name)
+    find_all_with_instance_string(@repository, name, :name)
   end
 
   def create(attributes)
-    create_new_instance(@merchants, attributes, Merchant)
+    create_new_instance(@repository, attributes, Merchant)
   end
 
   def update(id, attributes)
-    update_instance(id, attributes, @merchants, @unchangeable_keys)
+    update_instance(id, attributes, @repository, @unchangeable_keys)
   end
 
   def inspect
-    inspect_instance(self, @merchants)
+    inspect_instance(self, @repository)
   end
 
   def collect_id_for_items(id)

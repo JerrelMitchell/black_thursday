@@ -8,42 +8,39 @@ require_relative 'customer'
 class CustomerRepository
   include FileLoader
   include Repository
+  attr_reader :repository
   def initialize(filepath, parent)
-    @customers = []
+    @repository = []
     @parent = parent
     @unchangeable_keys = %I[id created_at]
-    load_attributes(filepath, @customers, Customer)
+    load_attributes(filepath, @repository, Customer)
   end
 
   def all
-    @customers
+    @repository
   end
 
   def find_by_id(id)
-    find_with_id(@customers, id)
+    find_with_id(@repository, id)
   end
 
   def find_all_by_first_name(first_name)
-    find_all_with_instance_string(@customers, first_name, :first_name)
+    find_all_with_instance_string(@repository, first_name, :first_name)
   end
 
   def find_all_by_last_name(last_name)
-    find_all_with_instance_string(@customers, last_name, :last_name)
+    find_all_with_instance_string(@repository, last_name, :last_name)
   end
 
   def create(attributes)
-    create_new_instance(@customers, attributes, Customer)
+    create_new_instance(@repository, attributes, Customer)
   end
 
   def update(id, attributes)
-    update_instance(id, attributes, @customers, @unchangeable_keys)
+    update_instance(id, attributes, @repository, @unchangeable_keys)
   end
 
   def delete(id)
-    delete_instance(@customers, id)
-  end
-
-  def inspect
-    inspect_instance(self, @customers)
+    delete_instance(@repository, id)
   end
 end

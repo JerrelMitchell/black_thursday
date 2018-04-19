@@ -1,7 +1,8 @@
 # :nodoc:
 module Repository
-  def inspect_instance(parent, instances)
-    "#<#{parent.class} #{instances.size} rows>"
+
+  def inspect
+    "#<#{self.class} #{@repository.size} rows>"
   end
 
   def find_with_id(instances, id)
@@ -53,14 +54,8 @@ module Repository
   end
 
   def assign_if_key_exists(attributes)
-    if attributes.keys.any? do |key|
-      ((key == :unit_price || key == :merchant_id) ||
-      (key  == :quantity   || key == :result)) ||
-      (key  == :first_name)
-    end
       attributes[:created_at] = Time.now.to_s
       attributes[:updated_at] = Time.now.to_s
-    end
   end
 
   def update_instance(id, attributes, instances, unchangeable_keys)

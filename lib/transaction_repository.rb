@@ -8,48 +8,43 @@ require_relative 'transaction'
 class TransactionRepository
   include FileLoader
   include Repository
-  attr_reader :transactions
+  attr_reader :repository
   def initialize(filepath, parent)
-    @transactions = []
+    @repository = []
     @parent = parent
     @unchangeable_keys = %I[id invoice_id created_at]
-    load_attributes(filepath, @transactions, Transaction)
+    load_attributes(filepath, @repository, Transaction)
   end
 
   def all
-    @transactions
+    @repository
   end
 
   def find_by_id(id)
-    find_with_id(@transactions, id)
+    find_with_id(@repository, id)
   end
 
   def find_all_by_invoice_id(id)
-    find_all_with_instance_key(@transactions, id, :invoice_id)
+    find_all_with_instance_key(@repository, id, :invoice_id)
   end
 
   def find_all_by_credit_card_number(card_number)
-    find_all_with_instance_key(@transactions, card_number, :credit_card_number)
+    find_all_with_instance_key(@repository, card_number, :credit_card_number)
   end
 
   def find_all_by_result(result)
-    find_all_with_instance_key(@transactions, result, :result)
+    find_all_with_instance_key(@repository, result, :result)
   end
 
   def delete(id)
-    delete_instance(@transactions, id)
+    delete_instance(@repository, id)
   end
 
   def create(attributes)
-    create_new_instance(@transactions, attributes, Transaction)
+    create_new_instance(@repository, attributes, Transaction)
   end
 
   def update(id, attributes)
-    update_instance(id, attributes, @transactions, @unchangeable_keys)
+    update_instance(id, attributes, @repository, @unchangeable_keys)
   end
-
-  def inspect
-    inspect_instance(self, @transactions)
-  end
-
 end

@@ -16,27 +16,27 @@ class SalesEngine
   end
 
   def items
-    @items = ItemRepository.new(files[:items], self)
+    @items ||= ItemRepository.new(files[:items], self)
   end
 
   def merchants
-    @merchants = MerchantRepository.new(files[:merchants], self)
+    @merchants ||= MerchantRepository.new(files[:merchants], self)
   end
 
   def invoices
-    @invoices = InvoiceRepository.new(files[:invoices], self)
+    @invoices ||= InvoiceRepository.new(files[:invoices], self)
   end
 
   def invoice_items
-    @invoice_items = InvoiceItemRepository.new(files[:invoice_items], self)
+    @invoice_items ||= InvoiceItemRepository.new(files[:invoice_items], self)
   end
 
   def transactions
-    @transactions = TransactionRepository.new(files[:transactions], self)
+    @transactions ||= TransactionRepository.new(files[:transactions], self)
   end
 
   def customers
-    @customers = CustomerRepository.new(files[:customers], self)
+    @customers ||= CustomerRepository.new(files[:customers], self)
   end
 
   def self.from_csv(files)
@@ -61,5 +61,5 @@ class SalesEngine
 
   def collect_prices_by_invoice_id(id)
     invoice_items.find_all_by_invoice_id(id)
-  end 
+  end
 end
