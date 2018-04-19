@@ -10,7 +10,7 @@ class MerchantRepository
   include Repository
   attr_reader :repository, :parent
   def initialize(filepath, parent)
-    @repository         = []
+    @repository        = []
     @parent            = parent
     @unchangeable_keys = %I[id]
     load_attributes(filepath, @repository, Merchant)
@@ -42,10 +42,6 @@ class MerchantRepository
 
   def update(id, attributes)
     update_instance(id, attributes, @repository, @unchangeable_keys)
-  end
-
-  def inspect
-    inspect_instance(self, @repository)
   end
 
   def collect_id_for_items(id)

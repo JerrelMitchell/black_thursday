@@ -11,7 +11,7 @@ class InvoiceRepository
   attr_reader :repository
   def initialize(filepath, parent)
     @repository = []
-    @parent   = parent
+    @parent     = parent
     @unchangeable_keys = %I[id invoice_id customer_id created_at merchant_id]
     load_attributes(filepath, @repository, Invoice)
   end
@@ -46,9 +46,5 @@ class InvoiceRepository
 
   def update(id, attributes)
     update_instance(id, attributes, @repository, @unchangeable_keys)
-  end
-
-  def inspect
-    inspect_instance(self, @repository)
   end
 end

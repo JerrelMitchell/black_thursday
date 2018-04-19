@@ -10,7 +10,7 @@ class InvoiceItemRepository
   include Repository
   attr_reader :repository
   def initialize(filepath, parent)
-    @repository     = []
+    @repository        = []
     @parent            = parent
     @unchangeable_keys = %I[id invoice_id created_at]
     load_attributes(filepath, @repository, InvoiceItem)

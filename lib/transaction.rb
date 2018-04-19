@@ -4,15 +4,15 @@ require 'time'
 class Transaction
   attr_reader :attributes, :parent
 
-  def initialize(action, parent)
+  def initialize(transaction, parent)
     @attributes = {
-      id:                 action[:id].to_i,
-      invoice_id:         action[:invoice_id].to_i,
-      result:             action[:result].to_sym,
-      credit_card_number: action[:credit_card_number],
-      credit_card_expiration_date: action[:credit_card_expiration_date],
-      created_at:         Time.parse(action[:created_at]),
-      updated_at:         Time.parse(action[:updated_at])
+      id:                          transaction[:id].to_i,
+      invoice_id:                  transaction[:invoice_id].to_i,
+      result:                      transaction[:result].to_sym,
+      credit_card_number:          transaction[:credit_card_number],
+      credit_card_expiration_date: transaction[:credit_card_expiration_date],
+      created_at:       Time.parse(transaction[:created_at]),
+      updated_at:       Time.parse(transaction[:updated_at])
     }
     @parent = parent
   end

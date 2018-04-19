@@ -3,13 +3,12 @@ require 'time'
 # Stores instance attributes generated from SalesEngine.
 class Invoice
   attr_reader :attributes, :parent
-
   def initialize(invoice, parent)
     @attributes = {
-      id:           invoice[:id].to_i,
-      customer_id:  invoice[:customer_id].to_i,
-      merchant_id:  invoice[:merchant_id].to_i,
-      status:       invoice[:status].to_sym,
+      id:                      invoice[:id].to_i,
+      customer_id:             invoice[:customer_id].to_i,
+      merchant_id:             invoice[:merchant_id].to_i,
+      status:                  invoice[:status].to_sym,
       created_at:   Time.parse(invoice[:created_at]),
       updated_at:   Time.parse(invoice[:updated_at])
     }

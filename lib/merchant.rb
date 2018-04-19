@@ -2,8 +2,10 @@
 class Merchant
   attr_reader :attributes, :parent
   def initialize(merchant, parent)
-    @attributes = { id:  merchant[:id].to_i,
-                    name:  merchant[:name] }
+    @attributes = {
+      id:    merchant[:id].to_i,
+      name:  merchant[:name]
+    }
     @parent = parent
   end
 
