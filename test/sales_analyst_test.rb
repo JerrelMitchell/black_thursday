@@ -186,8 +186,6 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_calculate_standard_deviation
     set = [3, 4, 5]
     average = @sales_analyst.average(4, set.length)
-
-    #binding.pry
     std_dev = @sales_analyst.standard_deviation(set, average)
     assert_equal 3.42, std_dev.round(2)
   end
