@@ -67,8 +67,7 @@ module Repository
   end
 
   def change_attribute(instance, key, value)
-    value = value.to_sym if instance.attributes.key?(:status)
-    value = value.to_sym if instance.attributes.key?(:result)
+    value = value.to_sym if (key == :result || key == :status)
     instance.attributes[key] = value if instance.attributes.keys.include?(key)
     assign_time(instance.attributes)
     instance.attributes[:updated_at] = Time.now
