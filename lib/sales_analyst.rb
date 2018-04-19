@@ -22,6 +22,14 @@ class SalesAnalyst
     sales_engine.invoices.all
   end
 
+  def invoice_items
+    sales_engine.invoice_items.all
+  end
+
+  def transactions
+    sales_engine.transactions.all
+  end
+
   def all_item_prices
     items.map(&:unit_price)
   end
@@ -76,7 +84,7 @@ class SalesAnalyst
 
   def standard_deviation_of_invoice_count
     standard_deviation(total_invoices_for_merchants,
-                       average_average_invoices_per_merchant)
+                       average_invoices_per_merchant)
   end
 
   def average_invoices_per_merchant_standard_deviation
@@ -122,29 +130,27 @@ class SalesAnalyst
   end
 
   def merchants_with_high_item_count
-    average_items = average_items_per_merchant
     standard_deviation = average_items_per_merchant_standard_deviation
     merchants.collect do |merchant|
-      average_difference = (find_items_with_merchant_id(merchant.id).length - average_items)
+      average_difference = (find_items_with_merchant_id(merchant.id).length -
+        average_items_per_merchant)
       merchant if average_difference > standard_deviation
     end.compact
   end
 
   def top_merchants_by_invoice_count
     invoices_deviation = average_invoices_per_merchant_standard_deviation
-    average_invoices = average_invoices_per_merchant
-    bottom_range = (invoices_deviation * 2) + average_invoices
+    range = (invoices_deviation * 2) + average_invoices_per_merchant
     merchants.map do |merchant|
-      merchant if find_invoices_with_merchant_id(merchant.id).length > bottom_range
+      merchant if find_invoices_with_merchant_id(merchant.id).length > range
     end.compact
   end
 
   def bottom_merchants_by_invoice_count
     invoices_deviation = average_invoices_per_merchant_standard_deviation
-    average_invoices = average_invoices_per_merchant
-    bottom_range = average_invoices - (invoices_deviation * 2)
+    range = average_invoices_per_merchant - (invoices_deviation * 2)
     merchants.map do |merchant|
-      merchant if find_invoices_with_merchant_id(merchant.id).length < bottom_range
+      merchant if find_invoices_with_merchant_id(merchant.id).length < range
     end.compact
   end
 
@@ -155,16 +161,15 @@ class SalesAnalyst
   end
 
   def find_top_days
-    average = group_invoices_by_weekday.values.inject(:+) / 7
-    std_dev = standard_deviation_of_invoices_by_weekday
-    amount = std_dev + average
+    average = (group_invoices_by_weekday.values.inject(:+) / 7)
+    amount = standard_deviation_of_invoices_by_weekday + average
     group_invoices_by_weekday.reject do |_, value|
       value < amount
     end
   end
 
   def standard_deviation_of_invoices_by_weekday
-    average = group_invoices_by_weekday.values.inject(:+) / 7
+    average = (group_invoices_by_weekday.values.inject(:+) / 7)
     total_invoices_by_day = group_invoices_by_weekday.values
     squared_num_invoice = total_invoices_by_day.map { |day| (day - average)**2 }
     value = squared_num_invoice.inject(:+) / (total_invoices_by_day.length - 1)
