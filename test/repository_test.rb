@@ -54,13 +54,11 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_it_can_create_a_new_instance
-    skip
-    result_1 = @merchants.find_with_id(@merchants.repository, 102)
+    result_1 = @merchants.find_with_id(@merchants.repository,  12334265)
     assert_nil result_1
     attributes = {name: 'Turing Store'}
     @merchants.create_new_instance(@merchants.repository, attributes, Merchant)
-    #binding.pry
-    result_2 = @merchants.find_with_id(@merchants.repository, 102)
+    result_2 = @merchants.find_with_id(@merchants.repository, 12334265)
     assert_equal Merchant, result_2.class
   end
 
@@ -71,6 +69,10 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_it_can_change_attribute
-    
+    result_1 = @merchants.repository.first
+    assert_equal 'Shopin1901', result_1.name
+    @merchants.change_attribute(result_1, :name, 'Turing')
+    result_2 = @merchants.repository.first
+    assert_equal 'Turing', result_2.name
   end
 end
