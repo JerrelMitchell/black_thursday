@@ -126,4 +126,5 @@ class SalesAnalystTest < Minitest::Test
     result = sales_analyst.invoice_total(1)
     assert_equal 21067.77, result
   end
+
 end
