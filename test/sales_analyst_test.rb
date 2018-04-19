@@ -46,7 +46,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 94,         result.size
     assert_equal BigDecimal, result.first.class
     assert_equal BigDecimal, result.last.class
-    assert_equal 12.00, result.first.to_f
+    assert_equal 12.00,      result.first.to_f
   end
 
   def test_it_can_return_the_maximum_price_in_list_of_items
