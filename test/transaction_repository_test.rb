@@ -83,7 +83,7 @@ class TransactionRepositoryTest < Minitest::Test
     assert_nil transaction_repo.find_by_id(101)
 
     transaction_repo.create(invoice_id: 808,
-                            result: :success,
+                            result: 'success',
                             credit_card_number: '1234567890',
                             credit_card_expiration_date: '1234')
 
@@ -100,7 +100,7 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal '0618',             result1.credit_card_expiration_date
     assert_equal :failed,            result1.result
 
-    transaction_repo.update(9, result: :success,
+    transaction_repo.update(9, result: 'success',
                                credit_card_number: '1234567890',
                                credit_card_expiration_date: '1234')
 
