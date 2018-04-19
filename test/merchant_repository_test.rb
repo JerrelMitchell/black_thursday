@@ -17,7 +17,7 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_it_has_all_merchants_in_array_and_all_merchants_are_merchants
     assert_instance_of Array, merchant_repo.all
-    assert_equal 39, merchant_repo.all.count
+    assert_equal 39,          merchant_repo.all.count
     assert(merchant_repo.all.all? { |merchant| merchant.is_a?(Merchant) })
   end
 
