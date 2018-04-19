@@ -6,12 +6,12 @@ class SalesAnalystTest < Minitest::Test
   attr_reader :sales_analyst
   def setup
     engine = SalesEngine.from_csv(
-      items:     './fixtures/fixture_items.csv',
-      merchants: './fixtures/fixture_merchants.csv',
-      invoices:  './fixtures/fixture_invoices.csv',
+      items:         './fixtures/fixture_items.csv',
+      merchants:     './fixtures/fixture_merchants.csv',
+      invoices:      './fixtures/fixture_invoices.csv',
       invoice_items: './fixtures/fixture_invoice_items.csv',
-      transactions: './fixtures/fixture_transactions.csv',
-      customers: './fixtures/fixture_customers.csv'
+      transactions:  './fixtures/fixture_transactions.csv',
+      customers:     './fixtures/fixture_customers.csv'
     )
     @sales_analyst = engine.analyst
   end
@@ -20,47 +20,81 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of SalesAnalyst, sales_analyst
   end
 
+  def test_it_can_have_all_instances_of_merchants
+    result = sales_analyst.merchants
+    assert_equal 39,       result.size
+    assert_equal Merchant, result.first.class
+    assert_equal Merchant, result.last.class
+  end
+
+  def test_it_can_have_all_instances_of_items
+    result = sales_analyst.items
+    assert_equal 94,   result.size
+    assert_equal Item, result.first.class
+    assert_equal Item, result.last.class
+  end
+
+  def test_it_can_have_all_instances_of_invoices
+    result = sales_analyst.invoices
+    assert_equal 200,     result.size
+    assert_equal Invoice, result.first.class
+    assert_equal Invoice, result.last.class
+  end
+
+  def test_it_can_return_collection_of_item_prices
+    result = sales_analyst.all_item_prices
+    assert_equal 94,         result.size
+    assert_equal BigDecimal, result.first.class
+    assert_equal BigDecimal, result.last.class
+    assert_equal 12.00,      result.first.to_f
+  end
+
+  def test_it_can_return_the_maximum_price_in_list_of_items
+    result = sales_analyst.found_max_price
+    assert_equal 3000, result
+  end
+
   def test_it_calculates_average_items_per_merchant
     result = sales_analyst.average_items_per_merchant
     assert_equal Float, result.class
-    assert_equal 2.41, result
+    assert_equal 2.41,  result
   end
 
   def test_it_calculates_standard_deviation_for_average_items_per_merchant
     result = sales_analyst.average_items_per_merchant_standard_deviation
     assert_equal Float, result.class
-    assert_equal 2.90, result
+    assert_equal 2.90,  result
   end
 
   def test_it_returns_collection_of_merchants_with_high_item_counts
     result = sales_analyst.merchants_with_high_item_count
-    assert_equal 2, result.size
+    assert_equal 2,        result.size
     assert_equal Merchant, result.first.class
   end
 
   def test_it_calculates_average_item_price_for_merchant_specified_by_id
     result = sales_analyst.average_item_price_for_merchant(12334105)
     assert_equal BigDecimal, result.class
-    assert_equal 29.99, result.to_f
+    assert_equal 29.99,      result.to_f
   end
 
   def test_it_calculates_standard_deviation_for_average_item_price
     result = sales_analyst.average_items_price_standard_deviation
-    assert_equal Float, result.class
+    assert_equal Float,  result.class
     assert_equal 374.65, result.to_f.round(2)
   end
 
   def test_it_calculates_average_item_price_for_all_merchants
     result = sales_analyst.average_average_price_per_merchant
     assert_equal BigDecimal, result.class
-    assert_equal 26.87, result.to_f
+    assert_equal 26.87,      result.to_f
   end
 
   def test_it_returns_collection_of_golden_items
     result = sales_analyst.golden_items
     assert_equal Array, result.class
-    assert_equal Item, result.first.class
-    assert_equal 2, result.size
+    assert_equal Item,  result.first.class
+    assert_equal 2,     result.size
   end
 
   def test_it_returns_total_invoices_for_merchants
@@ -71,13 +105,13 @@ class SalesAnalystTest < Minitest::Test
   def test_it_returns_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant
     assert_equal Float, result.class
-    assert_equal 5.13, result
+    assert_equal 5.13,  result
   end
 
   def test_it_calculates_standard_deviation_for_average_invoices_per_merchant
     result = sales_analyst.average_invoices_per_merchant_standard_deviation
     assert_equal Float, result.class
-    assert_equal 4.84, result
+    assert_equal 4.84,  result
   end
 
   def test_it_calculates_the_percentage_of_invoices_with_given_status
@@ -87,7 +121,7 @@ class SalesAnalystTest < Minitest::Test
 
     result2 = sales_analyst.invoice_status(:shipped)
     assert_equal Float, result2.class
-    assert_equal 59.5, result2
+    assert_equal 59.5,  result2
   end
 
   def test_it_can_group_number_of_invoices_by_each_day_of_the_week
@@ -110,16 +144,13 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_can_return_top_invoicing_days
     result = sales_analyst.top_days_by_invoice_count
-    assert_equal 1, result.size
     assert_equal ['Friday'], result
+    assert_equal 1,          result.size
   end
 
   def test_it_can_tell_if_invoice_is_paid_in_full
-    result_1 = sales_analyst.invoice_paid_in_full?(46)
-    assert result_1
-
-    result_2 = sales_analyst.invoice_paid_in_full?(1441)
-    refute result_2
+    assert sales_analyst.invoice_paid_in_full?(46)
+    refute sales_analyst.invoice_paid_in_full?(1441)
   end
 
   def test_it_can_return_invoice_total

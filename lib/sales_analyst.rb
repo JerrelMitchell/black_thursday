@@ -27,19 +27,23 @@ class SalesAnalyst
   end
 
   def found_max_price
-    sales_engine.items.all.map(&:unit_price).max.to_i
-  end
-
-  def prices_list
-    sales_engine.items.all.map(&:unit_price)
+    all_item_prices.max.to_i
   end
 
   def find_items_with_merchant_id(id)
     sales_engine.merchants.find_by_id(id).items
   end
 
+  def find_invoice_items_with_invoice_id(id)
+    sales_engine.invoice_items.find_all_by_invoice_id(id)
+  end
+
   def find_invoices_with_merchant_id(id)
     sales_engine.invoices.find_all_by_merchant_id(id)
+  end
+
+  def find_transactions_with_invoice_id(id)
+    sales_engine.transactions.find_all_by_invoice_id(id)
   end
 
   def average_invoices_per_merchant
@@ -55,7 +59,7 @@ class SalesAnalyst
   end
 
   def standard_deviation_of_item_price
-    standard_deviation(prices_list, average_average_price_per_merchant)
+    standard_deviation(all_item_prices, average_average_price_per_merchant)
   end
 
   def standard_deviation_of_invoice_count
@@ -85,7 +89,7 @@ class SalesAnalyst
 
   def average_item_price_for_merchant(id)
     return 0 if find_items_with_merchant_id(id).length.zero?
-    instance_items = sales_engine.collect_items_by_merchant_id(id)
+    instance_items = find_items_with_merchant_id(id)
     prices = instance_items.map(&:unit_price)
     average(prices.reduce(:+), instance_items.length)
   end
@@ -164,14 +168,14 @@ class SalesAnalyst
   end
 
   def invoice_paid_in_full?(invoice_id)
-    transactions = sales_engine.collect_transactions_by_invoice_id(invoice_id)
+    transactions = find_transactions_with_invoice_id(invoice_id)
     transactions.any? do |transaction|
       transaction.result == :success
     end
   end
 
   def invoice_total(invoice_id)
-    invoice_items = sales_engine.collect_prices_by_invoice_id(invoice_id)
+    invoice_items = find_invoice_items_with_invoice_id(invoice_id)
     total_of_all_items = invoice_items.map do |invoice_item|
       invoice_item.unit_price * invoice_item.quantity
     end.reduce(:+)
