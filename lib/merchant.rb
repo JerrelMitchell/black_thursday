@@ -16,12 +16,4 @@ class Merchant
   def name
     attributes[:name]
   end
-
-  def items
-    parent.collect_id_for_items(id)
-  end
-
-  def invoices
-    parent.collect_id_for_invoices(id)
-  end
 end

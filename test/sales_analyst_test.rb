@@ -54,6 +54,25 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 3000, result
   end
 
+  def test_it_gathers_items_with_matching_merchant_id
+    result = sales_analyst.find_items_with_merchant_id()
+  end
+
+  def test_it_gathers_invoices_with_matching_merchant_id
+    skip
+    result = sales_analyst.find_invoices_with_merchant_id
+  end
+
+  def test_it_gathers_invoice_items_with_matching_invoice_id
+    skip
+    result = sales_analyst.find_invoice_items_with_invoice_id
+  end
+
+  def test_it_gathers_transactions_with_matching_invoice_id
+    skip
+    result = sales_analyst.find_transactions_with_invoice_id
+  end
+
   def test_it_calculates_average_items_per_merchant
     result = sales_analyst.average_items_per_merchant
     assert_equal Float, result.class
