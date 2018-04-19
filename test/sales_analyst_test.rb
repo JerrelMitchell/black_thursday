@@ -150,7 +150,6 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_can_tell_if_invoice_is_paid_in_full
     assert sales_analyst.invoice_paid_in_full?(46)
-
     refute sales_analyst.invoice_paid_in_full?(1441)
   end
 
