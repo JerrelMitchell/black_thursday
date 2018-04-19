@@ -1,6 +1,5 @@
 # :nodoc:
 module Repository
-
   def inspect
     "#<#{self.class} #{@repository.size} rows>"
   end
@@ -49,13 +48,13 @@ module Repository
   def create_new_instance(instances, attributes, klass)
     new_id = (instances.map(&:id).max + 1)
     attributes[:id] = new_id
-    assign_if_key_exists(attributes)
+    assign_time(attributes)
     instances << klass.new(attributes, self)
   end
 
-  def assign_if_key_exists(attributes)
-      attributes[:created_at] = Time.now.to_s
-      attributes[:updated_at] = Time.now.to_s
+  def assign_time(attributes)
+    attributes[:created_at] = Time.now.to_s
+    attributes[:updated_at] = Time.now.to_s
   end
 
   def update_instance(id, attributes, instances, unchangeable_keys)
@@ -69,8 +68,9 @@ module Repository
 
   def change_attribute(instance, key, value)
     value = value.to_sym if instance.attributes.key?(:status)
+    value = value.to_sym if instance.attributes.key?(:result)
     instance.attributes[key] = value if instance.attributes.keys.include?(key)
-    assign_if_key_exists(instance.attributes)
+    assign_time(instance.attributes)
     instance.attributes[:updated_at] = Time.now
   end
 end
