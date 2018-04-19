@@ -49,12 +49,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 12.00,      result.first.to_f
   end
 
-  def test_it_can_total_items_of_each_merchant_has_based_on_their_id
-  end
-
-  def test_it_can_total_invoices_of_each_merchant_has_based_on_their_id
-  end
-
   def test_it_can_return_the_maximum_price_in_list_of_items
     result = sales_analyst.found_max_price
     assert_equal 3000, result
