@@ -31,19 +31,31 @@ class SalesAnalyst
   end
 
   def find_items_with_merchant_id(id)
-    sales_engine.merchants.find_by_id(id).items
-  end
-
-  def find_invoice_items_with_invoice_id(id)
-    sales_engine.invoice_items.find_all_by_invoice_id(id)
+    sales_engine.items.find_all_by_merchant_id(id)
   end
 
   def find_invoices_with_merchant_id(id)
     sales_engine.invoices.find_all_by_merchant_id(id)
   end
 
+  def find_invoice_items_with_invoice_id(id)
+    sales_engine.invoice_items.find_all_by_invoice_id(id)
+  end
+
   def find_transactions_with_invoice_id(id)
     sales_engine.transactions.find_all_by_invoice_id(id)
+  end
+
+  def total_items_for_merchants
+    merchants.map do |merchant|
+      find_items_with_merchant_id(merchant.id).length
+    end
+  end
+
+  def total_invoices_for_merchants
+    merchants.map do |merchant|
+      find_invoices_with_merchant_id(merchant.id).length
+    end
   end
 
   def average_invoices_per_merchant
@@ -73,14 +85,8 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant_standard_deviation
-    all_items = merchants.map { |merchant| merchant.items.length }
-    standard_deviation(all_items, average_items_per_merchant).round(2)
-  end
-
-  def total_invoices_for_merchants
-    merchants.map do |merchant|
-      sales_engine.merchants.find_by_id(merchant.id).invoices.length
-    end
+    standard_deviation(total_items_for_merchants,
+                       average_items_per_merchant).round(2)
   end
 
   def top_days_by_invoice_count
@@ -119,7 +125,7 @@ class SalesAnalyst
     average_items = average_items_per_merchant
     standard_deviation = average_items_per_merchant_standard_deviation
     merchants.collect do |merchant|
-      average_difference = (merchant.items.length - average_items)
+      average_difference = (find_items_with_merchant_id(merchant.id).length - average_items)
       merchant if average_difference > standard_deviation
     end.compact
   end
@@ -128,9 +134,8 @@ class SalesAnalyst
     invoices_deviation = average_invoices_per_merchant_standard_deviation
     average_invoices = average_invoices_per_merchant
     bottom_range = (invoices_deviation * 2) + average_invoices
-    sales_engine.merchants.all.map do |merchant|
-      amount = sales_engine.merchants.find_by_id(merchant.id).invoices.length
-      merchant if amount > bottom_range
+    merchants.map do |merchant|
+      merchant if find_invoices_with_merchant_id(merchant.id).length > bottom_range
     end.compact
   end
 
@@ -138,9 +143,8 @@ class SalesAnalyst
     invoices_deviation = average_invoices_per_merchant_standard_deviation
     average_invoices = average_invoices_per_merchant
     bottom_range = average_invoices - (invoices_deviation * 2)
-    sales_engine.merchants.all.map do |merchant|
-      amount = sales_engine.merchants.find_by_id(merchant.id).invoices.length
-      merchant if amount < bottom_range
+    merchants.map do |merchant|
+      merchant if find_invoices_with_merchant_id(merchant.id).length < bottom_range
     end.compact
   end
 
