@@ -169,4 +169,12 @@ class SalesAnalyst
       transaction.result == :success
     end
   end
+
+  def invoice_total(invoice_id)
+    invoice_items = sales_engine.collect_prices_by_invoice_id(invoice_id)
+    total_of_all_items = invoice_items.map do |invoice_item|
+      invoice_item.unit_price * invoice_item.quantity
+    end.reduce(:+)
+    total_of_all_items
+  end
 end

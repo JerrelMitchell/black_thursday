@@ -121,4 +121,9 @@ class SalesAnalystTest < Minitest::Test
     result_2 = sales_analyst.invoice_paid_in_full?(1441)
     refute result_2
   end
+
+  def test_it_can_return_invoice_total
+    result = sales_analyst.invoice_total(1)
+    assert_equal 21067.77, result
+  end
 end
