@@ -186,6 +186,18 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1,          result.size
   end
 
+  def test_it_can_group_invoices_by_weekday
+    result = sales_analyst.group_invoices_by_weekday
+    expected = {6=>30, 5=>35, 3=>20, 1=>26, 0=>33, 2=>33, 4=>23}
+    assert_equal expected, result
+  end
+
+  def test_it_can_find_top_days_grouping_invoices_by_weekday
+    result = sales_analyst.find_top_days
+    expected = {5=>35}
+    assert_equal expected, result
+  end
+
   def test_it_can_tell_if_invoice_is_paid_in_full
     assert sales_analyst.invoice_paid_in_full?(46)
     refute sales_analyst.invoice_paid_in_full?(1441)
