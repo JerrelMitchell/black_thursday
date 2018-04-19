@@ -3,7 +3,7 @@ require 'time'
 
 # # Stores instance attributes generated from SalesEngine.
 class InvoiceItem
-  attr_reader :attributes, :parent
+  attr_reader :attributes
   def initialize(invoice_item, parent)
     @attributes = {
       id:                       invoice_item[:id].to_i,
